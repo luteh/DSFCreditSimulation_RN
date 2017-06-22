@@ -24,7 +24,7 @@ const styles = {
         marginTop: 8
     },
     buttonStyle: {
-        width: SCREEN_WIDTH * 0.75,
+        width: SCREEN_WIDTH * 0.9,
         backgroundColor: '#397af8'
     }
 };

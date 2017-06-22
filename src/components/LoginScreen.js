@@ -6,29 +6,32 @@ import {
     View,
     Text
 } from 'react-native'
-import {Input, ButtonRNE} from './common'
+import {InputNB, ButtonRNE} from './common'
 
 class LoginScreen extends Component {
-    redirect(route){
+    redirect(route) {
         this.props.navigation.navigate(route)
     }
 
     render() {
         return (
             <View style={styles.containerStyle}>
-                <Input>
+                <InputNB>
                     Email
-                </Input>
-                <Input secureTextEntry>
+                </InputNB>
+                <InputNB secureTextEntry>
                     Password
-                </Input>
-                <ButtonRNE title="Login"
-                onPress={this.redirect.bind(this, 'RegisterScreen')}
+                </InputNB>
+                <ButtonRNE
+                    title="Login"
+                    onPress={this.redirect.bind(this, 'RegisterScreen')}
                 />
-                <Text style={{alignSelf: 'flex-start'}}>
+                <Text
+                    style={{alignSelf: 'flex-start', marginTop: 8}}
+                    onPress={this.redirect.bind(this, 'ForgotPasswordScreen')}>
                     Forgot Password
                 </Text>
-                <Text>
+                <Text style={{marginTop: 50}}>
                     Belum punya akun?
                 </Text>
                 <Text>
@@ -43,8 +46,8 @@ const styles = {
     containerStyle: {
         flex: 1,
         alignItems: 'center',
-        marginRight: 15,
-        marginLeft: 15,
+        marginLeft: 20,
+        marginRight: 20,
         marginTop: 50
     }
 };

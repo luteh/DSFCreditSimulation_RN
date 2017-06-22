@@ -19,10 +19,10 @@ const InputNB = ({children, secureTextEntry}) => {
     )
 };
 
-const width = Dimensions.get('window').width - 100;
+const width = Dimensions.get('window').width;
 const styles = {
-    containerStyle:{
-        width: width,
+    containerStyle: {
+        width: width * 0.9,
         marginBottom: 15
     }
 };

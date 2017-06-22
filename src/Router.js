@@ -5,6 +5,8 @@ import {StackNavigator} from 'react-navigation'
 import {
     LoginScreen,
     RegistrationScreen,
+    ForgotPasswordScreen,
+    NewPasswordScreen
 } from './components'
 
 export const Root = StackNavigator({
@@ -18,6 +20,18 @@ export const Root = StackNavigator({
         screen: RegistrationScreen,
         navigationOptions:{
             title:'Register'
+        }
+    },
+    ForgotPasswordScreen:{
+        screen: ForgotPasswordScreen,
+        navigationOptions:{
+            title:'Forgot Password'
+        }
+    },
+    NewPasswordScreen:{
+        screen: NewPasswordScreen,
+        navigationOptions:{
+            title:'New Password'
         }
     },
 });
