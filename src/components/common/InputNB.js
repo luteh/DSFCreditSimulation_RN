@@ -1,3 +1,30 @@
 /**
  * Created by Luteh on 22/06/2017.
  */
+import React from 'react'
+import {View, Dimensions} from 'react-native'
+import {Container, Content, Form, Item, Input, Label} from 'native-base'
+
+const InputNB = ({children, secureTextEntry}) => {
+
+    return (
+        <View style={styles.containerStyle}>
+            <Item floatingLabel>
+                <Label>{children}</Label>
+                <Input
+                    secureTextEntry={secureTextEntry}
+                    onChangeText={(text) => console.log(text)}/>
+            </Item>
+        </View>
+    )
+};
+
+const width = Dimensions.get('window').width - 100;
+const styles = {
+    containerStyle:{
+        width: width,
+        marginBottom: 15
+    }
+};
+
+export {InputNB}
