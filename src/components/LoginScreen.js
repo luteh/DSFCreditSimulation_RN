@@ -1,16 +1,32 @@
 /**
  * Created by Luteh on 22/06/2017.
  */
-import React, {Component} from 'react'
-import {
-    View,
-    Text
-} from 'react-native'
-import {InputNB, ButtonRNE} from './common'
+import React, {Component} from "react";
+import {Text, View, AsyncStorage} from "react-native";
+import {ButtonRNE, InputNB} from "./common";
+import axios from "axios";
 
 class LoginScreen extends Component {
+
+    componentWillMount() {
+        AsyncStorage.clear();
+    }
+
     redirect(route) {
         this.props.navigation.navigate(route)
+    }
+
+    async handleLogin() {
+        try {
+            let {data} = await axios.post('https://private-e6972-dsfcredit.apiary-mock.com/v1/auth/signin');
+            const {full_name, phone_number, dealer_address, email, avatar} = data.user;
+
+            let temporaryData = {full_name, phone_number, dealer_address, email, avatar};
+            AsyncStorage.setItem('user', JSON.stringify(temporaryData));
+            this.redirect('profileScreen');
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     render() {
@@ -24,7 +40,8 @@ class LoginScreen extends Component {
                 </InputNB>
                 <ButtonRNE
                     title="Login"
-                    onPress={this.redirect.bind(this, 'RegisterScreen')}
+                    // onPress={this.redirect.bind(this, 'profileScreen')}
+                    onPress={this.handleLogin.bind(this)}
                 />
                 <Text
                     style={{alignSelf: 'flex-start', marginTop: 8}}
