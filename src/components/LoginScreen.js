@@ -23,7 +23,7 @@ class LoginScreen extends Component {
 
             let temporaryData = {full_name, phone_number, dealer_address, email, avatar};
             AsyncStorage.setItem('user', JSON.stringify(temporaryData));
-            this.redirect('profileScreen');
+            this.redirect('drawerNavigation');
         } catch (err) {
             console.log(err)
         }

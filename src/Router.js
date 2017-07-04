@@ -1,14 +1,48 @@
 /**
  * Created by Luteh on 22/06/2017.
  */
-import {StackNavigator} from 'react-navigation'
+import React from 'react';
+import {Image} from 'react-native';
+import {StackNavigator, DrawerNavigator} from 'react-navigation'
 import {
     LoginScreen,
     RegistrationScreen,
     ForgotPasswordScreen,
     NewPasswordScreen,
-    ProfileScreen
+    ProfileScreen,
+    CreditSimulationScreen
 } from './components'
+
+export const Drawer = DrawerNavigator({
+    profileScreen: {
+        screen: ProfileScreen,
+        navigationOptions: {
+            title: 'Profile',
+            drawer:{
+                icon: () =>(
+                    <Image
+                        source={require('../imgs/home.png')}
+                        style={[styles.tabIcon, {tintColor: 'black'}]}
+                    />
+                )
+            }
+        }
+    },
+    creditSimulationScreen:{
+        screen: CreditSimulationScreen,
+        navigationOptions:{
+            title: 'Simulasi Kredit',
+            drawer:{
+                icon: () =>(
+                    <Image
+                        source={require('../imgs/tablet.png')}
+                        style={[styles.tabIcon, {tintColor: 'black'}]}
+                    />
+                )
+            }
+        }
+    }
+});
 
 export const Root = StackNavigator({
     LoginScreen: {
@@ -17,11 +51,14 @@ export const Root = StackNavigator({
             title: 'Login'
         }
     },
-    profileScreen: {
-        screen: ProfileScreen,
-        navigationOptions: {
-            title: 'Profile'
-        }
+    // profileScreen: {
+    //     screen: ProfileScreen,
+    //     navigationOptions: {
+    //         title: 'Profile'
+    //     }
+    // },
+    drawerNavigation:{
+      screen: Drawer
     },
     RegisterScreen: {
         screen: RegistrationScreen,
@@ -42,3 +79,10 @@ export const Root = StackNavigator({
         }
     },
 });
+
+const styles = {
+  tabIcon:{
+      width: 16,
+      height: 16,
+  }
+};
