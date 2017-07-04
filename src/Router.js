@@ -6,32 +6,39 @@ import {
     LoginScreen,
     RegistrationScreen,
     ForgotPasswordScreen,
-    NewPasswordScreen
+    NewPasswordScreen,
+    ProfileScreen
 } from './components'
 
 export const Root = StackNavigator({
     LoginScreen: {
         screen: LoginScreen,
-        navigationOptions:{
-            title:'Login'
+        navigationOptions: {
+            title: 'Login'
         }
     },
-    RegisterScreen:{
+    profileScreen: {
+        screen: ProfileScreen,
+        navigationOptions: {
+            title: 'Profile'
+        }
+    },
+    RegisterScreen: {
         screen: RegistrationScreen,
-        navigationOptions:{
-            title:'Register'
+        navigationOptions: {
+            title: 'Register'
         }
     },
-    ForgotPasswordScreen:{
+    ForgotPasswordScreen: {
         screen: ForgotPasswordScreen,
-        navigationOptions:{
-            title:'Forgot Password'
+        navigationOptions: {
+            title: 'Forgot Password'
         }
     },
-    NewPasswordScreen:{
+    NewPasswordScreen: {
         screen: NewPasswordScreen,
-        navigationOptions:{
-            title:'New Password'
+        navigationOptions: {
+            title: 'New Password'
         }
     },
 });
