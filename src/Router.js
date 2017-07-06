@@ -18,8 +18,8 @@ export const Drawer = DrawerNavigator({
         screen: ProfileScreen,
         navigationOptions: {
             title: 'Profile',
-            drawer:{
-                icon: () =>(
+            drawer: {
+                icon: () => (
                     <Image
                         source={require('../imgs/home.png')}
                         style={[styles.tabIcon, {tintColor: 'black'}]}
@@ -28,12 +28,12 @@ export const Drawer = DrawerNavigator({
             }
         }
     },
-    creditSimulationScreen:{
+    creditSimulationScreen: {
         screen: CreditSimulationScreen,
-        navigationOptions:{
+        navigationOptions: {
             title: 'Simulasi Kredit',
-            drawer:{
-                icon: () =>(
+            drawer: {
+                icon: () => (
                     <Image
                         source={require('../imgs/tablet.png')}
                         style={[styles.tabIcon, {tintColor: 'black'}]}
@@ -45,44 +45,47 @@ export const Drawer = DrawerNavigator({
 });
 
 export const Root = StackNavigator({
-    LoginScreen: {
-        screen: LoginScreen,
-        navigationOptions: {
-            title: 'Login'
-        }
+        LoginScreen: {
+            screen: LoginScreen,
+            navigationOptions: {
+                header: null
+            }
+        },
+        // profileScreen: {
+        //     screen: ProfileScreen,
+        //     navigationOptions: {
+        //         title: 'Profile'
+        //     }
+        // },
+        drawerNavigation: {
+            screen: Drawer
+        },
+        registerScreen: {
+            screen: RegistrationScreen,
+            navigationOptions: {
+                title: 'Register'
+            }
+        },
+        ForgotPasswordScreen: {
+            screen: ForgotPasswordScreen,
+            navigationOptions: {
+                title: 'Forgot Password'
+            }
+        },
+        NewPasswordScreen: {
+            screen: NewPasswordScreen,
+            navigationOptions: {
+                title: 'New Password'
+            }
+        },
     },
-    // profileScreen: {
-    //     screen: ProfileScreen,
-    //     navigationOptions: {
-    //         title: 'Profile'
-    //     }
-    // },
-    drawerNavigation:{
-      screen: Drawer
-    },
-    RegisterScreen: {
-        screen: RegistrationScreen,
-        navigationOptions: {
-            title: 'Register'
-        }
-    },
-    ForgotPasswordScreen: {
-        screen: ForgotPasswordScreen,
-        navigationOptions: {
-            title: 'Forgot Password'
-        }
-    },
-    NewPasswordScreen: {
-        screen: NewPasswordScreen,
-        navigationOptions: {
-            title: 'New Password'
-        }
-    },
-});
+    {
+        mode: 'modal'
+    });
 
 const styles = {
-  tabIcon:{
-      width: 16,
-      height: 16,
-  }
+    tabIcon: {
+        width: 16,
+        height: 16,
+    }
 };

@@ -25,7 +25,8 @@ const styles = {
     },
     buttonStyle: {
         width: SCREEN_WIDTH * 0.9,
-        backgroundColor: '#397af8'
+        backgroundColor: '#B71C1C',
+        borderRadius:50
     }
 };
 

@@ -2,8 +2,8 @@
  * Created by Luteh on 22/06/2017.
  */
 import React, {Component} from "react";
-import {Text, View, AsyncStorage, Image} from "react-native";
-import {ButtonRNE, InputNB, Footer} from "./common";
+import {Text, View, AsyncStorage, Image, Button} from "react-native";
+import {ButtonRNE, InputNB, Footer, RegisterText} from "./common";
 import axios from "axios";
 
 class LoginScreen extends Component {
@@ -32,7 +32,7 @@ class LoginScreen extends Component {
     render() {
         return (
             <View style={styles.containerStyle}>
-                <View style={{flex:9, alignItems:'center'}}>
+                <View style={{flex: 10, alignItems: 'center'}}>
                     <InputNB>
                         Email
                     </InputNB>
@@ -40,24 +40,22 @@ class LoginScreen extends Component {
                         Password
                     </InputNB>
                     <ButtonRNE
-                        title="Login"
-                        // onPress={this.redirect.bind(this, 'profileScreen')}
-                        onPress={this.handleLogin.bind(this)}
+                    title="Login"
+                    // onPress={this.redirect.bind(this, 'profileScreen')}
+                    onPress={this.handleLogin.bind(this)}
                     />
                     <Text
                         style={{marginTop: 8}}
                         onPress={this.redirect.bind(this, 'ForgotPasswordScreen')}>
-                        Forgot Password?
-                    </Text>
-                    <Text style={{marginTop: 50}}>
-                        Belum punya akun?
-                    </Text>
-                    <Text>
-                        Register disini
+                        Lupa Password?
                     </Text>
                 </View>
 
-                <View style={{flex:1}}>
+                <RegisterText
+                    onPress={this.redirect.bind(this, 'registerScreen')}
+                />
+
+                <View style={{flex: 1}}>
                     <Footer/>
                 </View>
             </View>
@@ -67,15 +65,11 @@ class LoginScreen extends Component {
 
 const styles = {
     containerStyle: {
-        flex:1,
+        flex: 1,
         alignItems: 'center',
-        marginLeft: 20,
-        marginRight: 20,
-        marginTop: 50
+        justifyContent: 'space-around',
+        padding: 20
     },
-    fontStyle: {
-        color: 'red'
-    }
 };
 
 export {LoginScreen}

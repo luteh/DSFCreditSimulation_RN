@@ -15,6 +15,7 @@ class ComboBox extends Component{
                     {this.props.text}
                 </Text>
                 <Picker
+                    style={styles.pickerStyle}
                     selectedValue={this.state.language}
                     onValueChange={(itemValue, itemIndex) => this.setState({language: itemValue})}
                 >
@@ -25,5 +26,12 @@ class ComboBox extends Component{
         )
     }
 }
+
+const styles = {
+    pickerStyle:{
+        color:'#E0E0E0'
+    }
+};
+
 
 export {ComboBox}
