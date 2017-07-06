@@ -3,8 +3,21 @@
  */
 import React, {Component} from 'react';
 import {Text, View, AsyncStorage, Image, Button, Dimensions} from 'react-native';
+import {ButtonRNE, Footer} from './common'
 
 class ProfileScreen extends Component {
+    static navigationOptions = {
+        headerStyle: {
+            backgroundColor: '#C62828',
+        },
+        headerTitleStyle: {
+            color: 'white'
+        },
+        headerBackTitleStyle: {
+            color: 'white'
+        },
+    };
+
     componentWillMount() {
         this.getProfile();
 
@@ -46,44 +59,56 @@ class ProfileScreen extends Component {
                     style={styles.profileImageStyle}
                     source={{uri: this.state.avatar}}
                 />
-                <View>
-                    <Text style={{fontWeight:'bold'}}>Nama Lengkap</Text>
-                    <Text>{this.state.full_name}</Text>
+                <View style={{
+                    flex: 2,
+                    marginLeft: 16,
+                    marginRight: 16,
+                    justifyContent: 'space-around',
+                    alignItems: 'flex-start'
+                }}>
+                    <View>
+                        <Text style={{fontWeight: 'bold'}}>Nama Lengkap</Text>
+                        <Text>{this.state.full_name}</Text>
+                    </View>
+                    <View>
+                        <Text style={{fontWeight: 'bold'}}>No. Handphone</Text>
+                        <Text>{this.state.phone_number}</Text>
+                    </View>
+                    <View>
+                        <Text style={{fontWeight: 'bold'}}>Alamat Kantor</Text>
+                        <Text>{this.state.dealer_address}</Text>
+                    </View>
+                    <View>
+                        <Text style={{fontWeight: 'bold'}}>Email</Text>
+                        <Text>{this.state.email}</Text>
+                    </View>
                 </View>
-                <View>
-                    <Text style={{fontWeight:'bold'}}>No. Handphone</Text>
-                    <Text>{this.state.phone_number}</Text>
+                <View style={{flex: 1}}>
+                    <ButtonRNE
+                        style={{marginTop: 5}}
+                        title="Edit Profil"
+                        onPress={() => console.log('Pressed!')}
+                    />
                 </View>
-                <View>
-                    <Text style={{fontWeight:'bold'}}>Alamat Kantor</Text>
-                    <Text>{this.state.dealer_address}</Text>
-                </View>
-                <View>
-                    <Text style={{fontWeight:'bold'}}>Email</Text>
-                    <Text>{this.state.email}</Text>
-                </View>
-                <Button
-                    style={{alignSelf:'center'}}
-                    title="Edit Profile / Password"
-                    onPress={() => console.log('Pressed!')}
-                />
+
+
+                <Footer />
             </View>
         )
     }
 }
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
+const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const styles = {
     containerStyle: {
         flex: 1,
-        justifyContent: 'space-around',
-        margin:16
+        backgroundColor: 'white',
     },
     profileImageStyle: {
-        height: SCREEN_HEIGHT * 0.25,
-        width: SCREEN_HEIGHT * 0.25,
-        alignSelf:'center'
+        height: SCREEN_HEIGHT * 0.35,
+        width: SCREEN_WIDTH,
     }
 };
 

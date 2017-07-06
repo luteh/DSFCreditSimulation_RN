@@ -67,6 +67,7 @@ const styles = {
     containerStyle: {
         flex: 1,
         alignItems: 'center',
+        backgroundColor:'white',
         justifyContent: 'space-around',
         padding: 20
     },

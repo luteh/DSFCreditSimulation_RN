@@ -9,8 +9,8 @@ module.exports = StyleSheet.create({
     containerStyle: {
         flex: 1,
         alignItems: 'center',
-        marginLeft: 20,
-        marginRight: 20,
-        marginTop: 50
+        backgroundColor: 'white',
+        justifyContent: 'space-around',
+        padding: 20
     }
 });

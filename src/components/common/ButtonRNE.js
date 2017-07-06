@@ -21,7 +21,8 @@ const ButtonRNE = ({title, onPress}) => {
 
 const styles = {
     containerStyle: {
-        marginTop: 8
+        marginTop: 8,
+        alignItems:'center'
     },
     buttonStyle: {
         width: SCREEN_WIDTH * 0.9,

@@ -3,39 +3,68 @@
  */
 import React, {Component} from 'react'
 import {View, Text} from 'react-native'
-import {InputNB, ButtonRNE} from './common'
-import styles from './styles/Styles'
+import {InputNB, ButtonRNE, Footer, RegisterText} from './common'
 
 class ForgotPasswordScreen extends Component {
+    static navigationOptions = {
+        headerStyle: {
+            backgroundColor: '#C62828',
+        },
+        headerTitleStyle: {
+            color: 'white'
+        },
+        headerBackTitleStyle: {
+            color: 'white'
+        },
+    };
+
     redirect(route) {
         this.props.navigation.navigate(route)
+    }
+    back(){
+        this.props.navigation.goBack()
     }
 
     render() {
         return (
             <View style={styles.containerStyle}>
-                <InputNB>
-                    Email
-                </InputNB>
-                <ButtonRNE
-                    title="Reset Password"
-                    onPress={this.redirect.bind(this, 'NewPasswordScreen')}
+                <View style={{flex: 4, alignItems: 'center', justifyContent: 'space-between'}}>
+                    <InputNB>
+                        Email
+                    </InputNB>
+                    <ButtonRNE
+                        title="Reset Password"
+                        onPress={this.redirect.bind(this, 'NewPasswordScreen')}
+                    />
+                    <Text
+                        style={{color: 'red', fontWeight: 'bold'}}
+                        onPress={this.back.bind(this)}
+                    >
+                        KEMBALI KE HALAMAN LOGIN
+                    </Text>
+                </View>
+                <View style={{flex: 6}}>
+
+                </View>
+                <RegisterText
+                    onPress={this.redirect.bind(this, 'registerScreen')}
                 />
-                <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
-                    <Text style={styless.textStyle}>Register</Text>
-                    <Text style={{flex: 4}}> </Text>
-                    <Text style={[styless.textStyle, {left: 10}]}>Login</Text>
+                <View style={{flex: 1}}>
+                    <Footer/>
                 </View>
             </View>
         )
     }
 }
 
-const styless = {
-    textStyle: {
+const styles = {
+    containerStyle: {
         flex: 1,
-        alignSelf: 'flex-end'
-    }
+        alignItems: 'center',
+        backgroundColor: 'white',
+        justifyContent: 'space-around',
+        padding: 20
+    },
 };
 
 export {ForgotPasswordScreen}

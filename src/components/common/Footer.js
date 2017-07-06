@@ -7,7 +7,7 @@ import {View, Text, Image} from 'react-native'
 const Footer = () => {
     return (
         <View style={styles.containerStyle}>
-            <Text>
+            <Text style={{fontSize:10}}>
                 POWERED BY
             </Text>
             <Image
@@ -25,10 +25,10 @@ const styles = {
         justifyContent: 'flex-end'
     },
     imageStyle: {
-        flex:1,
-        height: 30,
-        width: 100,
+        height: 50,
+        width: 80,
         resizeMode:'stretch'
+
     }
 };
 

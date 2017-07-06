@@ -17,7 +17,7 @@ export const Drawer = DrawerNavigator({
     profileScreen: {
         screen: ProfileScreen,
         navigationOptions: {
-            title: 'Profile',
+            title: 'Profil',
             drawer: {
                 icon: () => (
                     <Image
@@ -69,7 +69,7 @@ export const Root = StackNavigator({
         ForgotPasswordScreen: {
             screen: ForgotPasswordScreen,
             navigationOptions: {
-                title: 'Forgot Password'
+                title: 'Forgot Password',
             }
         },
         NewPasswordScreen: {
