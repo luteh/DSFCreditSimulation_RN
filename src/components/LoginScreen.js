@@ -2,8 +2,8 @@
  * Created by Luteh on 22/06/2017.
  */
 import React, {Component} from "react";
-import {Text, View, AsyncStorage} from "react-native";
-import {ButtonRNE, InputNB} from "./common";
+import {Text, View, AsyncStorage, Image} from "react-native";
+import {ButtonRNE, InputNB, Footer} from "./common";
 import axios from "axios";
 
 class LoginScreen extends Component {
@@ -32,28 +32,34 @@ class LoginScreen extends Component {
     render() {
         return (
             <View style={styles.containerStyle}>
-                <InputNB>
-                    Email
-                </InputNB>
-                <InputNB secureTextEntry>
-                    Password
-                </InputNB>
-                <ButtonRNE
-                    title="Login"
-                    // onPress={this.redirect.bind(this, 'profileScreen')}
-                    onPress={this.handleLogin.bind(this)}
-                />
-                <Text
-                    style={{alignSelf: 'flex-start', marginTop: 8}}
-                    onPress={this.redirect.bind(this, 'ForgotPasswordScreen')}>
-                    Forgot Password
-                </Text>
-                <Text style={{marginTop: 50}}>
-                    Belum punya akun?
-                </Text>
-                <Text>
-                    Register disini
-                </Text>
+                <View style={{flex:9, alignItems:'center'}}>
+                    <InputNB>
+                        Email
+                    </InputNB>
+                    <InputNB secureTextEntry>
+                        Password
+                    </InputNB>
+                    <ButtonRNE
+                        title="Login"
+                        // onPress={this.redirect.bind(this, 'profileScreen')}
+                        onPress={this.handleLogin.bind(this)}
+                    />
+                    <Text
+                        style={{marginTop: 8}}
+                        onPress={this.redirect.bind(this, 'ForgotPasswordScreen')}>
+                        Forgot Password?
+                    </Text>
+                    <Text style={{marginTop: 50}}>
+                        Belum punya akun?
+                    </Text>
+                    <Text>
+                        Register disini
+                    </Text>
+                </View>
+
+                <View style={{flex:1}}>
+                    <Footer/>
+                </View>
             </View>
         )
     }
@@ -61,11 +67,14 @@ class LoginScreen extends Component {
 
 const styles = {
     containerStyle: {
-        flex: 1,
+        flex:1,
         alignItems: 'center',
         marginLeft: 20,
         marginRight: 20,
         marginTop: 50
+    },
+    fontStyle: {
+        color: 'red'
     }
 };
 
