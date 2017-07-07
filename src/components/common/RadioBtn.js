@@ -2,12 +2,12 @@
  * Created by Luteh on 06/07/2017.
  */
 import React, {Component} from 'react'
-import {View} from 'react-native'
+import {View, Text} from 'react-native'
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 
 const radio_props = [
-    {label: 'param1', value: 0 },
-    {label: 'param2', value: 1 }
+    {label: 'Ya', value: 0 },
+    {label: 'Tidak', value: 1 }
 ];
 
 class RadioBtn extends  Component{
@@ -17,6 +17,9 @@ class RadioBtn extends  Component{
     render(){
         return(
             <View>
+                <Text>
+                    {this.props.text}
+                </Text>
                 <RadioForm
                     radio_props={radio_props}
                     initial={0}

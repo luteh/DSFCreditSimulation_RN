@@ -14,35 +14,38 @@ import {
 } from './components'
 
 export const Drawer = DrawerNavigator({
-    profileScreen: {
-        screen: ProfileScreen,
-        navigationOptions: {
-            title: 'Profil',
-            drawer: {
-                icon: () => (
-                    <Image
-                        source={require('../imgs/home.png')}
-                        style={[styles.tabIcon, {tintColor: 'black'}]}
-                    />
-                )
+        profileScreen: {
+            screen: ProfileScreen,
+            navigationOptions: {
+                title: 'Profil',
+                drawer: {
+                    icon: () => (
+                        <Image
+                            source={require('../imgs/home.png')}
+                            style={[styles.tabIcon, {tintColor: 'black'}]}
+                        />
+                    ),
+                }
+            }
+        },
+        creditSimulationScreen: {
+            screen: CreditSimulationScreen,
+            navigationOptions: {
+                title: 'Simulasi Kredit',
+                drawer: {
+                    icon: () => (
+                        <Image
+                            source={require('../imgs/tablet.png')}
+                            style={[styles.tabIcon, {tintColor: 'black'}]}
+                        />
+                    )
+                }
             }
         }
     },
-    creditSimulationScreen: {
-        screen: CreditSimulationScreen,
-        navigationOptions: {
-            title: 'Simulasi Kredit',
-            drawer: {
-                icon: () => (
-                    <Image
-                        source={require('../imgs/tablet.png')}
-                        style={[styles.tabIcon, {tintColor: 'black'}]}
-                    />
-                )
-            }
-        }
-    }
-});
+    {
+        drawerPosition: 'right'
+    });
 
 export const Root = StackNavigator({
         LoginScreen: {
@@ -58,7 +61,15 @@ export const Root = StackNavigator({
         //     }
         // },
         drawerNavigation: {
-            screen: Drawer
+            screen: Drawer,
+            navigationOptions: {
+                headerStyle: {
+                    backgroundColor: '#C62828',
+                },
+                headerBackTitleStyle: {
+                    color: 'white'
+                },
+            }
         },
         registerScreen: {
             screen: RegistrationScreen,
