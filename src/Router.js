@@ -44,6 +44,7 @@ export const Drawer = DrawerNavigator({
         }
     },
     {
+        headerMode:null,
         drawerPosition: 'right'
     });
 

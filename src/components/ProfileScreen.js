@@ -90,8 +90,6 @@ class ProfileScreen extends Component {
                         onPress={() => console.log('Pressed!')}
                     />
                 </View>
-
-
                 <Footer />
             </View>
         )
