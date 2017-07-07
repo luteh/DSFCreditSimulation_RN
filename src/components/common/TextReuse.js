@@ -12,4 +12,5 @@ const TextReuse= ({children}) =>{
     )
 };
 
+
 export {TextReuse}

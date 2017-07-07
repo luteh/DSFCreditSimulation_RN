@@ -5,15 +5,26 @@ import React from 'react'
 import {View} from 'react-native'
 import {FormInput, FormLabel, FormValidationMessage} from 'react-native-elements'
 
-const Input = ({children, secureTextEntry}) => {
+const Input = ({children, secureTextEntry, keyboardType, returnKeyType}) => {
     return (
         <View style={styles.containerStyle}>
-            <FormLabel>
+            <FormLabel labelStyle={{alignSelf: 'flex-start'}}>
                 {children}
             </FormLabel>
             <FormInput
+                containerStyle={{
+                    alignSelf: 'center',
+                }}
+                inputStyle={{
+                    backgroundColor: '#F5F5F5',
+                    borderRadius: 5,
+                    color: 'black',
+
+                }}
+                keyboardType={keyboardType}
+                returnKeyType={returnKeyType}
                 secureTextEntry={secureTextEntry}
-                placeholder={`Please enter your ${children}`}
+                placeholder={`${children}`}
                 onChangeText={(text) => console.log(text)}
             />
         </View>
@@ -21,7 +32,8 @@ const Input = ({children, secureTextEntry}) => {
 };
 
 const styles = {
-    containerStyle:{
+    containerStyle: {
+        flex: 1,
         marginTop: 8
     }
 };

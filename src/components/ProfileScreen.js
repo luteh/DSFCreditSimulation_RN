@@ -22,9 +22,9 @@ class ProfileScreen extends Component {
         this.getProfile();
 
         //Ignore the 'Setting a timer' warning from firebase for Android
-        console.ignoredYellowBox = [
-            'source.uri'
-        ]
+        // console.ignoredYellowBox = [
+        //     'source.uri'
+        // ]
     }
 
     constructor() {

@@ -23,7 +23,7 @@ const width = Dimensions.get('window').width;
 const styles = {
     containerStyle: {
         width: width * 0.9,
-        marginBottom: 15
+        marginBottom: 15,
     }
 };
 

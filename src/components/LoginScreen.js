@@ -10,6 +10,10 @@ class LoginScreen extends Component {
 
     componentWillMount() {
         AsyncStorage.clear();
+        console.ignoredYellowBox = [
+            'Unable to symbolicate',
+            'source.uri'
+        ];
     }
 
     redirect(route) {
