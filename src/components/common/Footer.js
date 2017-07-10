@@ -9,13 +9,16 @@ const Footer = () => {
         <View style={styles.containerStyle}>
             <View style={{justifyContent:'center'}}>
                 <Text style={{fontSize: 10}}>
-                    POWERED BY
+                    POWERED BY :
                 </Text>
+            </View>
+            <View style={{width:5}}>
+
             </View>
 
             <Image
                 style={styles.imageStyle}
-                source={{uri: 'https://siva.jsstatic.com/id/1404/images/banner/1404_banner_0_90874.jpg'}}
+                source={require('../../../imgs/footer_logo.png')}
             />
         </View>
     )
@@ -24,13 +27,12 @@ const Footer = () => {
 
 const styles = {
     containerStyle: {
-        height:40,
         flexDirection: 'row',
         justifyContent: 'center',
     },
     imageStyle: {
-        height: 40,
-        width: 80,
+        height: null,
+        width: 100,
         resizeMode: 'stretch'
 
     }

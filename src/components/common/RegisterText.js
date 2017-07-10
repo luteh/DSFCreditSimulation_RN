@@ -6,7 +6,7 @@ import {View, Text} from "react-native";
 
 const RegisterText = ({onPress}) => {
     return (
-        <View style={{flex: 1, flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row'}}>
             <Text style={styles.fontStyle}>
                 Tidak punya akun? <Text style={[styles.fontStyle, {fontWeight: 'bold'}]}
                                         onPress={onPress}>

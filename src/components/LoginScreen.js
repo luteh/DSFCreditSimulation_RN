@@ -10,8 +10,8 @@ class LoginScreen extends Component {
 
     componentWillMount() {
         /*setTimeout(() => {
-            this.redirect('splashScreen')
-        }, 1000);*/
+         this.redirect('splashScreen')
+         }, 1000);*/
         AsyncStorage.clear();
         console.ignoredYellowBox = [
             'Unable to symbolicate',
@@ -37,47 +37,70 @@ class LoginScreen extends Component {
     }
 
     render() {
+        const {containerStyle, contentStyle, backgroundImageStyle, logoImageStyle} = styles;
         return (
-            <View style={styles.containerStyle}>
-                <View style={{flex: 10, alignItems: 'center'}}>
-                    <InputNB>
-                        Email
-                    </InputNB>
-                    <InputNB secureTextEntry>
-                        Password
-                    </InputNB>
-                    <ButtonRNE
-                        title="Login"
-                        // onPress={this.redirect.bind(this, 'profileScreen')}
-                        onPress={this.redirect.bind(this, 'drawerNavigation')}
-                    />
-                    <Text
-                        style={{marginTop: 8}}
-                        onPress={this.redirect.bind(this, 'ForgotPasswordScreen')}>
-                        Lupa Password?
-                    </Text>
-                </View>
+            <Image
+                style={backgroundImageStyle}
+                source={require('../../imgs/bg_login.png')}
+            >
+                <View style={containerStyle}>
+                    <View style={contentStyle}>
+                        <Image
+                            style={logoImageStyle}
+                            source={require('../../imgs/lia-logo.png')}
+                        />
+                        <InputNB>
+                            Email
+                        </InputNB>
+                        <InputNB secureTextEntry>
+                            Password
+                        </InputNB>
+                        <ButtonRNE
+                            title="Login"
+                            // onPress={this.redirect.bind(this, 'profileScreen')}
+                            onPress={this.redirect.bind(this, 'drawerNavigation')}
+                        />
+                        <Text
+                            style={{marginTop: 8}}
+                            onPress={this.redirect.bind(this, 'ForgotPasswordScreen')}>
+                            Lupa Password?
+                        </Text>
+                        <View style={{marginTop:120}}>
+                            <RegisterText
+                                onPress={this.redirect.bind(this, 'registerScreen')}
+                            />
+                        </View>
+                    </View>
 
-                <RegisterText
-                    onPress={this.redirect.bind(this, 'registerScreen')}
-                />
-
-                <View style={{marginBottom:32}}>
-                    <Footer/>
+                    <View style={{marginBottom: 32}}>
+                        <Footer/>
+                    </View>
                 </View>
-            </View>
+            </Image>
         )
     }
 }
 
 const styles = {
     containerStyle: {
-        flex: 1,
-        alignItems: 'center',
-        backgroundColor: 'white',
-        justifyContent: 'space-around',
-        padding: 20
+        flex: 1
     },
+    contentStyle: {
+        flex:1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    backgroundImageStyle: {
+        flex: 1,
+        height: null,
+        width: null,
+        resizeMode: 'stretch'
+    },
+    logoImageStyle: {
+        height: 100,
+        width: 100,
+        resizeMode: 'stretch'
+    }
 };
 
 export {LoginScreen}
