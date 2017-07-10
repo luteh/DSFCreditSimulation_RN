@@ -10,7 +10,8 @@ import {
     ForgotPasswordScreen,
     NewPasswordScreen,
     ProfileScreen,
-    CreditSimulationScreen
+    CreditSimulationScreen,
+    ResultScreen
 } from './components'
 
 export const Drawer = DrawerNavigator({
@@ -44,7 +45,7 @@ export const Drawer = DrawerNavigator({
         }
     },
     {
-        headerMode:null,
+        headerMode: null,
         drawerPosition: 'right'
     });
 
@@ -88,6 +89,12 @@ export const Root = StackNavigator({
             screen: NewPasswordScreen,
             navigationOptions: {
                 title: 'New Password'
+            }
+        },
+        resultScreen: {
+            screen: ResultScreen,
+            navigationOptions: {
+                title: 'Hasil Simulasi Kredit'
             }
         },
     },
