@@ -49,7 +49,7 @@ class ForgotPasswordScreen extends Component {
                 <RegisterText
                     onPress={this.redirect.bind(this, 'registerScreen')}
                 />
-                <View style={{flex: 1}}>
+                <View style={{marginBottom:32}}>
                     <Footer/>
                 </View>
             </View>

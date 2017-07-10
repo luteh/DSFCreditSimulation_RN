@@ -9,6 +9,9 @@ import axios from "axios";
 class LoginScreen extends Component {
 
     componentWillMount() {
+        /*setTimeout(() => {
+            this.redirect('splashScreen')
+        }, 1000);*/
         AsyncStorage.clear();
         console.ignoredYellowBox = [
             'Unable to symbolicate',
@@ -44,9 +47,9 @@ class LoginScreen extends Component {
                         Password
                     </InputNB>
                     <ButtonRNE
-                    title="Login"
-                    // onPress={this.redirect.bind(this, 'profileScreen')}
-                    onPress={this.handleLogin.bind(this)}
+                        title="Login"
+                        // onPress={this.redirect.bind(this, 'profileScreen')}
+                        onPress={this.redirect.bind(this, 'drawerNavigation')}
                     />
                     <Text
                         style={{marginTop: 8}}
@@ -59,7 +62,7 @@ class LoginScreen extends Component {
                     onPress={this.redirect.bind(this, 'registerScreen')}
                 />
 
-                <View style={{flex: 1}}>
+                <View style={{marginBottom:32}}>
                     <Footer/>
                 </View>
             </View>
@@ -71,7 +74,7 @@ const styles = {
     containerStyle: {
         flex: 1,
         alignItems: 'center',
-        backgroundColor:'white',
+        backgroundColor: 'white',
         justifyContent: 'space-around',
         padding: 20
     },

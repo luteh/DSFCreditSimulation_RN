@@ -11,7 +11,8 @@ import {
     NewPasswordScreen,
     ProfileScreen,
     CreditSimulationScreen,
-    ResultScreen
+    ResultScreen,
+    SplashScreen
 } from './components'
 
 export const Drawer = DrawerNavigator({
@@ -52,6 +53,12 @@ export const Drawer = DrawerNavigator({
 export const Root = StackNavigator({
         LoginScreen: {
             screen: LoginScreen,
+            navigationOptions: {
+                header: null
+            }
+        },
+        splashScreen: {
+            screen: SplashScreen,
             navigationOptions: {
                 header: null
             }

@@ -19,7 +19,7 @@ class ProfileScreen extends Component {
     };
 
     componentWillMount() {
-        this.getProfile();
+        // this.getProfile();
 
         //Ignore the 'Setting a timer' warning from firebase for Android
         // console.ignoredYellowBox = [
@@ -90,7 +90,9 @@ class ProfileScreen extends Component {
                         onPress={() => console.log('Pressed!')}
                     />
                 </View>
-                <Footer />
+                <View style={{marginBottom:32}}>
+                    <Footer />
+                </View>
             </View>
         )
     }
@@ -105,8 +107,9 @@ const styles = {
         backgroundColor: 'white',
     },
     profileImageStyle: {
-        height: SCREEN_HEIGHT * 0.35,
+        height: SCREEN_WIDTH * 0.6,
         width: SCREEN_WIDTH,
+        resizeMode: 'stretch'
     }
 };
 

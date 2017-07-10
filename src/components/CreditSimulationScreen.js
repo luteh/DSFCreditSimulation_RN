@@ -18,6 +18,10 @@ class CreditSimulationScreen extends Component {
         },
     };
 
+    redirect(route){
+        this.props.navigation.navigate(route);
+    }
+
     render() {
         return (
             <View style={styles.containerStyle}>
@@ -45,7 +49,7 @@ class CreditSimulationScreen extends Component {
                         </Input>
                         <ButtonRNE
                             title="HITUNG"
-                            onPress={() => console.log("HITUNG Pressed!")}
+                            onPress={this.redirect.bind(this,'resultScreen')}
                         />
                         <Text
                             style={{color: 'red', fontWeight: 'bold', alignSelf: 'center'}}
@@ -53,7 +57,9 @@ class CreditSimulationScreen extends Component {
                         >
                             RESET
                         </Text>
-                        <Footer/>
+                        <View style={{marginBottom:32}}>
+                            <Footer/>
+                        </View>
                     </View>
                 </ScrollView>
             </View>

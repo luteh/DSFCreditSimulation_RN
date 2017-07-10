@@ -83,7 +83,9 @@ class RegistrationScreen extends Component {
                         title="REGISTER"
                         onPress={() => console.log('Register Pressed!')}
                     />
-                    <Footer style={{marginTop: 5, marginBottom: 5}}/>
+                    <View style={{marginBottom:32}}>
+                        <Footer />
+                    </View>
                 </ScrollView>
             </View>
         )
