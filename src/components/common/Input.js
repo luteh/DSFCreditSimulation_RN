@@ -8,7 +8,7 @@ import {FormInput, FormLabel, FormValidationMessage} from 'react-native-elements
 const Input = ({children, secureTextEntry, keyboardType, returnKeyType}) => {
     return (
         <View style={styles.containerStyle}>
-            <FormLabel labelStyle={{alignSelf: 'flex-start'}}>
+            <FormLabel labelStyle={{alignSelf: 'flex-start', fontSize:10}}>
                 {children}
             </FormLabel>
             <FormInput
@@ -34,7 +34,7 @@ const Input = ({children, secureTextEntry, keyboardType, returnKeyType}) => {
 const styles = {
     containerStyle: {
         flex: 1,
-        marginTop: 8
+        marginBottom: 5
     }
 };
 

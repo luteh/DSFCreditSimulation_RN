@@ -10,8 +10,8 @@ class ComboBox extends Component{
     };
     render(){
         return(
-            <View>
-                <Text>
+            <View style={styles.containerStyle}>
+                <Text style={styles.textStyle}>
                     {this.props.text}
                 </Text>
                 <Picker
@@ -28,8 +28,17 @@ class ComboBox extends Component{
 }
 
 const styles = {
+    containerStyle:{
+      marginBottom:5
+    },
+    textStyle:{
+        fontSize:10
+    },
     pickerStyle:{
-        color:'#E0E0E0'
+        color:'#E0E0E0',
+        borderWidth:1,
+        borderRadius:5,
+        borderColor:'grey'
     }
 };
 

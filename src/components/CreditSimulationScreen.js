@@ -18,48 +18,60 @@ class CreditSimulationScreen extends Component {
         },
     };
 
-    redirect(route){
+    redirect(route) {
         this.props.navigation.navigate(route);
     }
 
     render() {
+        const {containerStyle, contentContainerStlye} = styles;
         return (
-            <View style={styles.containerStyle}>
+            <View style={containerStyle}>
                 <ScrollView>
-                    <View style={{flex: 1, justifyContent: 'space-around'}}>
-                        <ComboBox text="Kendaraan"/>
-                        <ComboBox text="Cabang DSF"/>
-                        <ComboBox text="Region"/>
-                        <Input>
-                            Harga
-                        </Input>
-                        <ComboBox text="Tenor"/>
-                        <ComboBox text="Tipe Pembayaran"/>
-                        <ComboBox text="Jenis Asuransi"/>
-                        <RadioBtn text="TJH/TPL"/>
-                        <RadioBtn text="Loan Protection"/>
-                        <RadioBtn text="Apakah asuransi ingin dimasukkan ke pokok hutan?"/>
-                        <Input>
-                            Provisi (%)
-                        </Input>
-                        <ComboBox text="Type Customer"/>
+                    <View style={contentContainerStlye}>
+                        <View>
+                            <ComboBox text="Kendaraan"/>
+                            <ComboBox text="Cabang DSF"/>
+                            <ComboBox text="Region"/>
+                            <Input>
+                                Harga
+                            </Input>
+                            <ComboBox text="Tenor"/>
+                            <ComboBox text="Tipe Pembayaran"/>
+                            <ComboBox text="Jenis Asuransi"/>
+                        </View>
+                        <View>
+                            <RadioBtn text="TJH/TPL"/>
+                            <RadioBtn text="Loan Protection"/>
+                            <RadioBtn text="Apakah asuransi ingin dimasukkan ke pokok hutan?"/>
+                        </View>
+                        <View>
+                            <Input>
+                                Provisi (%)
+                            </Input>
+                            <ComboBox text="Type Customer"/>
+                        </View>
+
                         <RadioBtn text="Jenis Simulasi"/>
                         <Input>
                             Rupiah
                         </Input>
-                        <ButtonRNE
-                            title="HITUNG"
-                            onPress={this.redirect.bind(this,'resultScreen')}
-                        />
-                        <Text
-                            style={{color: 'red', fontWeight: 'bold', alignSelf: 'center'}}
-                            onPress={() => console.log("RESET Pressed!")}
-                        >
-                            RESET
-                        </Text>
-                        <View style={{marginBottom:32}}>
-                            <Footer/>
+                        <View style={{marginTop:32}}>
+                            <ButtonRNE
+                                title="HITUNG"
+                                onPress={this.redirect.bind(this, 'resultScreen')}
+                            />
                         </View>
+                        <View style={{marginTop:32, marginBottom:70}}>
+                            <Text
+                                style={{color: 'red', fontWeight: 'bold', alignSelf: 'center'}}
+                                onPress={() => console.log("RESET Pressed!")}
+                            >
+                                RESET
+                            </Text>
+                        </View>
+                    </View>
+                    <View style={{marginBottom: 32}}>
+                        <Footer/>
                     </View>
                 </ScrollView>
             </View>
@@ -71,8 +83,9 @@ const styles = {
     containerStyle: {
         flex: 1,
         backgroundColor: 'white',
-        paddingLeft: 16,
-        paddingRight: 16
+    },
+    contentContainerStlye: {
+        padding: 24
     }
 };
 
