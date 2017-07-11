@@ -108,27 +108,27 @@ class ResultScreen extends Component {
                                     biayaList="50.000.000"
                                 />
                                 <PerincianText
-                                    titleList="Uang Muka"
+                                    titleList="Angsuran Pertama"
                                     biayaList="50.000.000"
                                 />
                                 <PerincianText
-                                    titleList="Uang Muka"
+                                    titleList="Asuransi"
                                     biayaList="50.000.000"
                                 />
                                 <PerincianText
-                                    titleList="Uang Muka"
+                                    titleList="Provisi"
                                     biayaList="50.000.000"
                                 />
                                 <PerincianText
-                                    titleList="Uang Muka"
+                                    titleList="Admin Fee"
                                     biayaList="50.000.000"
                                 />
                                 <PerincianText
-                                    titleList="Uang Muka"
+                                    titleList="Total DP"
                                     biayaList="50.000.000"
                                 />
                                 <PerincianText
-                                    titleList="Uang Muka"
+                                    titleList="Sisa Angsuran (x11)"
                                     biayaList="50.000.000"
                                 />
                             </View>
