@@ -55,37 +55,37 @@ class ResultScreen extends Component {
                             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                                 <View style={{flex: 1}}>
                                     <ResultText
-                                        titleText="Harga"
+                                        titleText="Tenor"
                                         detailText="Mitsubishi"
                                     />
                                     <ResultText
-                                        titleText="Harga"
+                                        titleText="TJH / TPL"
                                         detailText="Mitsubishi"
                                     />
                                     <ResultText
-                                        titleText="Harga"
+                                        titleText="Jenis Asuransi"
                                         detailText="Mitsubishi"
                                     />
                                     <ResultText
-                                        titleText="Harga"
+                                        titleText="Type Costumer"
                                         detailText="Mitsubishi"
                                     />
                                 </View>
                                 <View style={{flex: 1}}>
                                     <ResultText
-                                        titleText="Harga"
+                                        titleText="Tipe Pembayaran"
                                         detailText="Mitsubishi"
                                     />
                                     <ResultText
-                                        titleText="Harga"
+                                        titleText="Loan Protection"
                                         detailText="Mitsubishi"
                                     />
                                     <ResultText
-                                        titleText="Harga"
+                                        titleText="Provisi"
                                         detailText="Mitsubishi"
                                     />
                                     <ResultText
-                                        titleText="Harga"
+                                        titleText="Jenis Simulasi"
                                         detailText="Mitsubishi"
                                     />
                                 </View>
