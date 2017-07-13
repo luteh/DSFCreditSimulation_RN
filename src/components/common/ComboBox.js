@@ -35,10 +35,11 @@ const styles = {
         fontSize:10
     },
     pickerStyle:{
-        color:'#E0E0E0',
+        // color:'#E0E0E0',
         borderWidth:1,
         borderRadius:5,
-        borderColor:'grey'
+        borderColor:'grey',
+        height:30,
     }
 };
 
