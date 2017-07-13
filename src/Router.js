@@ -2,7 +2,7 @@
  * Created by Luteh on 22/06/2017.
  */
 import React from 'react';
-import {Image} from 'react-native';
+import {Image, TouchableHighlight} from 'react-native';
 import {StackNavigator, DrawerNavigator} from 'react-navigation'
 import {
     LoginScreen,
@@ -16,37 +16,34 @@ import {
 } from './components'
 
 export const Drawer = DrawerNavigator({
-        profileScreen: {
-            screen: ProfileScreen,
-            navigationOptions: {
-                title: 'Profil',
-                drawer: {
-                    icon: () => (
-                        <Image
-                            source={require('../imgs/home.png')}
-                            style={[styles.tabIcon, {tintColor: 'black'}]}
-                        />
-                    ),
-                }
-            }
-        },
         creditSimulationScreen: {
             screen: CreditSimulationScreen,
             navigationOptions: {
                 title: 'Simulasi Kredit',
-                drawer: {
-                    icon: () => (
-                        <Image
-                            source={require('../imgs/tablet.png')}
-                            style={[styles.tabIcon, {tintColor: 'black'}]}
-                        />
-                    )
-                }
+                drawerIcon: ({tintColor}) => (
+                    <Image
+                        source={require('../imgs/icon-simulasi-kredit.png')}
+                        style={[styles.tabIcon, {tintColor: 'red'}]}
+                    />
+                ),
             }
-        }
+        },
+        profileScreen: {
+            screen: ProfileScreen,
+            navigationOptions: {
+                title: 'Profil',
+                drawerIcon: ({tintColor}) => (
+                    <Image
+                        source={require('../imgs/icon-profil.png')}
+                        style={[styles.tabIcon, {tintColor: 'red'}]}
+                    />
+                ),
+            }
+        },
     },
     {
-        headerMode: null,
+        initialRouteName: 'profileScreen',
+        headerMode: 'none',
         drawerPosition: 'right'
     });
 
@@ -63,12 +60,6 @@ export const Root = StackNavigator({
                 header: null
             }
         },
-        // profileScreen: {
-        //     screen: ProfileScreen,
-        //     navigationOptions: {
-        //         title: 'Profile'
-        //     }
-        // },
         drawerNavigation: {
             screen: Drawer,
             navigationOptions: {
@@ -78,7 +69,8 @@ export const Root = StackNavigator({
                 headerBackTitleStyle: {
                     color: 'white'
                 },
-            }
+
+            },
         },
         registerScreen: {
             screen: RegistrationScreen,

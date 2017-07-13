@@ -2,7 +2,7 @@
  * Created by Luteh on 04/07/2017.
  */
 import React, {Component} from 'react';
-import {Text, View, AsyncStorage, Image, Button, Dimensions} from 'react-native';
+import {Text, View, AsyncStorage, Image, Button, Dimensions, TouchableHighlight} from 'react-native';
 import {ButtonRNE, Footer} from './common'
 
 class ProfileScreen extends Component {
@@ -16,10 +16,18 @@ class ProfileScreen extends Component {
         headerBackTitleStyle: {
             color: 'white'
         },
+        headerRight: (
+            <TouchableHighlight onPress={()=> console.log('Drawer Pressed!')}>
+                <Image
+                    source={require('../../imgs/icon-sidebar.png')}
+                    style={{height: 16, width: 16, marginRight: 10}}
+                />
+            </TouchableHighlight>
+        )
     };
 
     componentWillMount() {
-        this.getProfile();
+        // this.getProfile();
     }
 
     constructor() {
@@ -85,7 +93,7 @@ class ProfileScreen extends Component {
                         onPress={() => console.log('Pressed!')}
                     />
                 </View>
-                <View style={{marginBottom:32}}>
+                <View style={{marginBottom: 32}}>
                     <Footer />
                 </View>
             </View>
@@ -97,15 +105,16 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const styles = {
-    containerStyle: {
-        flex: 1,
-        backgroundColor: 'white',
-    },
-    profileImageStyle: {
-        height: SCREEN_WIDTH * 0.6,
-        width: SCREEN_WIDTH,
-        resizeMode: 'stretch'
+        containerStyle: {
+            flex: 1,
+            backgroundColor: 'white',
+        },
+        profileImageStyle: {
+            height: SCREEN_WIDTH * 0.6,
+            width: SCREEN_WIDTH,
+            resizeMode: 'stretch'
+        },
     }
-};
+;
 
 export {ProfileScreen};

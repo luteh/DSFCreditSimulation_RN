@@ -21,7 +21,8 @@ class LoginScreen extends Component {
         AsyncStorage.clear();
         console.ignoredYellowBox = [
             'Unable to symbolicate',
-            'source.uri'
+            'source.uri',
+            'Possible Unhandled Promise'
         ];
     }
 
@@ -67,8 +68,8 @@ class LoginScreen extends Component {
                             </InputNB>
                             <ButtonRNE
                                 title="Login"
-                                // onPress={this.redirect.bind(this, 'drawerNavigation')}
-                                onPress={this.handleLogin.bind(this)}
+                                onPress={this.redirect.bind(this, 'drawerNavigation')}
+                                // onPress={this.handleLogin.bind(this)}
                             />
                             <Text
                                 style={{marginTop: 8}}
