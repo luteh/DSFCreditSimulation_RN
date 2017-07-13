@@ -12,7 +12,8 @@ import {
     ProfileScreen,
     CreditSimulationScreen,
     ResultScreen,
-    SplashScreen
+    SplashScreen,
+    SyaratKetentuanScreen
 } from './components'
 
 export const Drawer = DrawerNavigator({
@@ -28,21 +29,21 @@ export const Drawer = DrawerNavigator({
                 ),
             }
         },
-        profileScreen: {
-            screen: ProfileScreen,
-            navigationOptions: {
-                title: 'Profil',
-                drawerIcon: ({tintColor}) => (
-                    <Image
-                        source={require('../imgs/icon-profil.png')}
-                        style={[styles.tabIcon, {tintColor: 'red'}]}
-                    />
-                ),
-            }
-        },
+        // profileScreen: {
+        //     screen: ProfileScreen,
+        //     navigationOptions: {
+        //         title: 'Profil',
+        //         drawerIcon: ({tintColor}) => (
+        //             <Image
+        //                 source={require('../imgs/icon-profil.png')}
+        //                 style={[styles.tabIcon, {tintColor: 'red'}]}
+        //             />
+        //         ),
+        //     }
+        // },
     },
     {
-        initialRouteName: 'profileScreen',
+        initialRouteName: 'creditSimulationScreen',
         headerMode: 'none',
         drawerPosition: 'right'
     });
@@ -58,6 +59,12 @@ export const Root = StackNavigator({
             screen: SplashScreen,
             navigationOptions: {
                 header: null
+            }
+        },
+        syaratKetentuan: {
+            screen:SyaratKetentuanScreen,
+            navigationOptions: {
+                title: 'Syarat & Ketentuan',
             }
         },
         drawerNavigation: {
@@ -98,7 +105,8 @@ export const Root = StackNavigator({
         },
     },
     {
-        mode: 'modal'
+        mode: 'modal',
+        initialRouteName: 'splashScreen'
     });
 
 const styles = {

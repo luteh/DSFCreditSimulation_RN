@@ -6,6 +6,11 @@ import {Text, View, ScrollView} from 'react-native';
 import {ComboBox, RadioBtn, Input, ButtonRNE, Footer} from './common'
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import {Divider} from 'react-native-elements'
+import DropDown, {
+    Select,
+    Option,
+    OptionList,
+} from 'react-native-selectme';
 
 class CreditSimulationScreen extends Component {
     static navigationOptions = {

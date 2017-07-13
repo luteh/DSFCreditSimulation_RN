@@ -5,33 +5,41 @@ import React, {Component} from 'react'
 import {View, Image, Dimensions} from 'react-native'
 
 class SplashScreen extends Component {
-    componentDidMount(){
-    this.props.navigation.goBack();
+    componentDidMount() {
+        setTimeout(() => {
+            this.props.navigation.navigate('syaratKetentuan')
+        }, 2000)
     }
 
     render() {
+        const {containerStyle, imageStyle, backgroundImageStyle} = styles;
         return (
-            <View style={styles.containerStyle}>
+
+            <View style={containerStyle}>
                 <Image
-                    source={{uri: 'https://siva.jsstatic.com/id/1404/images/banner/1404_banner_0_90874.jpg'}}
-                    style={styles.imageStyle}
+                    style={imageStyle}
+                    source={require('../../imgs/splashscreen_logo.png')}
                 />
             </View>
         )
     }
 }
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
-const SCREEN_HEIGHT = Dimensions.get('window').height;
-
 const styles = {
     containerStyle: {
-        flex: 1
-    },
-    imageStlye: {
         flex: 1,
-        width: SCREEN_WIDTH,
-        height: SCREEN_HEIGHT,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    backgroundImageStlye: {
+        flex: 1,
+        width: null,
+        height: null,
+        resizeMode: 'stretch'
+    },
+    imageStyle: {
+        width: 50,
+        height: 50,
         resizeMode: 'stretch'
     }
 };
