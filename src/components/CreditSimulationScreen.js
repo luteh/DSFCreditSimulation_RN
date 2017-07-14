@@ -1,12 +1,12 @@
 /**
  * Created by Luteh on 04/07/2017.
  */
-import React, {Component} from 'react';
-import {Text, View, ScrollView, TextInput, AsyncStorage} from 'react-native';
-import {ComboBox, RadioBtn, Input, ButtonRNE, Footer} from './common'
-import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
-import {Divider} from 'react-native-elements'
-import ModalDropdown from 'react-native-modal-dropdown';
+import React, {Component} from "react";
+import {AsyncStorage, ScrollView, Text, TextInput, View} from "react-native";
+import {ButtonRNE, Footer, Input, RadioBtn} from "./common";
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from "react-native-simple-radio-button";
+import {Divider} from "react-native-elements";
+import ModalDropdown from "react-native-modal-dropdown";
 
 class CreditSimulationScreen extends Component {
     static navigationOptions = {
@@ -43,7 +43,7 @@ class CreditSimulationScreen extends Component {
         provisi: '',
         typeCostumer: '',
         jenisSimulasi: '',
-        dpRupiah: ''
+        dpRupiah: '',
     };
 
     componentDidUpdate() {
@@ -120,10 +120,11 @@ class CreditSimulationScreen extends Component {
                             </View>
                             <View style={{marginBottom: 5}}>
                                 <Text style={{fontSize: 10, marginBottom: 3}}>Region</Text>
-                                <ModalDropdown options={['Cijerah', 'Sumber Sari']}
-                                               style={dropdownStyle}
-                                               textStyle={dropdownTextStyle}
-                                               onSelect={(idx, value) => this.setState({region: value})}
+                                <ModalDropdown
+                                    options={['Jakarta', 'West Java', 'East Java', 'North Sumatera', 'South Sumatera', 'Kalimantan-Sulawesi']}
+                                    style={dropdownStyle}
+                                    textStyle={dropdownTextStyle}
+                                    onSelect={(idx, value) => this.setState({region: value})}
                                 />
                             </View>
                             <View style={{marginBottom: 5}}>
