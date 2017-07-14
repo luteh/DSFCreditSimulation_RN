@@ -16,37 +16,37 @@ import {
     SyaratKetentuanScreen
 } from './components'
 
-export const Drawer = DrawerNavigator({
-        creditSimulationScreen: {
-            screen: CreditSimulationScreen,
-            navigationOptions: {
-                title: 'Simulasi Kredit',
-                drawerIcon: ({tintColor}) => (
-                    <Image
-                        source={require('../imgs/icon-simulasi-kredit.png')}
-                        style={[styles.tabIcon, {tintColor: 'red'}]}
-                    />
-                ),
-            }
-        },
-        // profileScreen: {
-        //     screen: ProfileScreen,
-        //     navigationOptions: {
-        //         title: 'Profil',
-        //         drawerIcon: ({tintColor}) => (
-        //             <Image
-        //                 source={require('../imgs/icon-profil.png')}
-        //                 style={[styles.tabIcon, {tintColor: 'red'}]}
-        //             />
-        //         ),
-        //     }
-        // },
-    },
-    {
-        initialRouteName: 'creditSimulationScreen',
-        headerMode: 'none',
-        drawerPosition: 'right'
-    });
+// export const Drawer = DrawerNavigator({
+//         // creditSimulationScreen: {
+//         //     screen: CreditSimulationScreen,
+//         //     navigationOptions: {
+//         //         title: 'Simulasi Kredit',
+//         //         drawerIcon: ({tintColor}) => (
+//         //             <Image
+//         //                 source={require('../imgs/icon-simulasi-kredit.png')}
+//         //                 style={[styles.tabIcon, {tintColor: 'red'}]}
+//         //             />
+//         //         ),
+//         //     }
+//         // },
+//         // profileScreen: {
+//         //     screen: ProfileScreen,
+//         //     navigationOptions: {
+//         //         title: 'Profil',
+//         //         drawerIcon: ({tintColor}) => (
+//         //             <Image
+//         //                 source={require('../imgs/icon-profil.png')}
+//         //                 style={[styles.tabIcon, {tintColor: 'red'}]}
+//         //             />
+//         //         ),
+//         //     }
+//         // },
+//     },
+//     {
+//         initialRouteName: 'creditSimulationScreen',
+//         headerMode: 'none',
+//         drawerPosition: 'right'
+//     });
 
 export const Root = StackNavigator({
         LoginScreen: {
@@ -67,18 +67,24 @@ export const Root = StackNavigator({
                 title: 'Syarat & Ketentuan',
             }
         },
-        drawerNavigation: {
-            screen: Drawer,
+        creditSimulationScreen: {
+            screen: CreditSimulationScreen,
             navigationOptions: {
-                headerStyle: {
-                    backgroundColor: '#C62828',
-                },
-                headerBackTitleStyle: {
-                    color: 'white'
-                },
-
-            },
+                title: 'Simulasi Kredit',
+            }
         },
+        // drawerNavigation: {
+        //     screen: Drawer,
+        //     navigationOptions: {
+        //         headerStyle: {
+        //             backgroundColor: '#C62828',
+        //         },
+        //         headerBackTitleStyle: {
+        //             color: 'white'
+        //         },
+        //
+        //     },
+        // },
         registerScreen: {
             screen: RegistrationScreen,
             navigationOptions: {

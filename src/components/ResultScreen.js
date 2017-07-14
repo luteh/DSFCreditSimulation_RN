@@ -2,7 +2,7 @@
  * Created by Luteh on 10/07/2017.
  */
 import React, {Component} from 'react'
-import {View, Text, Image, Dimensions, ScrollView} from 'react-native'
+import {View, Text, Image, Dimensions, ScrollView, AsyncStorage} from 'react-native'
 import {ListItem} from 'native-base'
 import {ResultText, PerincianText, ButtonRNE, Footer} from './common'
 import {Button} from "react-native-elements";
@@ -19,6 +19,32 @@ class ResultScreen extends Component {
             color: 'white'
         },
     };
+
+    state={
+        cabang:'',
+        region:'',
+        tjhtpl:'',
+        loanProtection:'',
+        asuransi:''
+    };
+
+    componentWillMount(){
+        this.getFormData()
+    }
+
+    async getFormData(){
+        try {
+            await AsyncStorage.getItem('form', (error, result) => {
+                if (result) {
+                    let resultParsed = JSON.parse(result);
+                    const {cabang, region, tjhtpl, loanProtection, asuransi} = resultParsed;
+                    this.setState({cabang, region, tjhtpl, loanProtection, asuransi});
+                }
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     render() {
         return (
@@ -37,11 +63,11 @@ class ResultScreen extends Component {
                                 />
                                 <ResultText
                                     titleText="Cabang DSF"
-                                    detailText="Jakarta Selatan"
+                                    detailText={this.state.cabang}
                                 />
                                 <ResultText
                                     titleText="Region"
-                                    detailText="Mitsubishi"
+                                    detailText={this.state.region}
                                 />
                                 <ResultText
                                     titleText="Cabang DSF"
@@ -60,7 +86,7 @@ class ResultScreen extends Component {
                                     />
                                     <ResultText
                                         titleText="TJH / TPL"
-                                        detailText="Mitsubishi"
+                                        detailText={this.state.tjhtpl}
                                     />
                                     <ResultText
                                         titleText="Jenis Asuransi"
@@ -78,7 +104,7 @@ class ResultScreen extends Component {
                                     />
                                     <ResultText
                                         titleText="Loan Protection"
-                                        detailText="Mitsubishi"
+                                        detailText={this.state.loanProtection}
                                     />
                                     <ResultText
                                         titleText="Provisi"

@@ -2,15 +2,11 @@
  * Created by Luteh on 04/07/2017.
  */
 import React, {Component} from 'react';
-import {Text, View, ScrollView} from 'react-native';
+import {Text, View, ScrollView, TextInput, AsyncStorage} from 'react-native';
 import {ComboBox, RadioBtn, Input, ButtonRNE, Footer} from './common'
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import {Divider} from 'react-native-elements'
-import DropDown, {
-    Select,
-    Option,
-    OptionList,
-} from 'react-native-selectme';
+import ModalDropdown from 'react-native-modal-dropdown';
 
 class CreditSimulationScreen extends Component {
     static navigationOptions = {
@@ -33,29 +29,66 @@ class CreditSimulationScreen extends Component {
         ],
         value3: 0,
         value3Index: 0,
+        canada: '',
+        kendaraan: '',
+        cabang: '',
+        region: '',
+        harga: '',
+        tenor: '',
+        tipePembayaran: '',
+        jenisAsuransi: '',
+        tjhtpl: '',
+        loanProtection: '',
+        asuransi: '',
+        provisi: '',
+        typeCostumer: '',
+        jenisSimulasi: '',
+        dpRupiah: ''
     };
+
+    componentDidUpdate() {
+        console.log('Dropdown cabang : ' + this.state.cabang)
+    }
+
+    async saveFormValue() {
+        try {
+            const {cabang, region} = this.state;
+            let temporaryData = {cabang, region};
+            await AsyncStorage.setItem('form', JSON.stringify(temporaryData));
+            this.redirect('resultScreen')
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
     redirect(route) {
         this.props.navigation.navigate(route);
     }
 
-    jenisSimulasiViewHandler(){
+    jenisSimulasiViewHandler() {
         const radioLabel = this.state.types3[this.state.value3Index].label;
-        switch (radioLabel){
+        switch (radioLabel) {
             case 'DP':
-                return(
-                    <Input>
-                        DP Rupiah
-                    </Input>
+                return (
+                    <View style={{flexDirection: 'row'}}>
+                        <TextInput
+                            style={{height: 40, width: 100, borderWidth: 1, borderRadius: 3, marginRight: 5}}
+                            placeholder='%'
+                        />
+                        <TextInput
+                            style={{height: 40, width: 225, borderWidth: 1, borderRadius: 3}}
+                            placeholder='Rupiah'
+                        />
+                    </View>
                 );
             case 'TDP':
-                return(
+                return (
                     <Input>
                         Rupiah
                     </Input>
                 );
             case 'Cicilan':
-                return(
+                return (
                     <Input>
                         Rupiah
                     </Input>
@@ -64,32 +97,82 @@ class CreditSimulationScreen extends Component {
     }
 
     render() {
-        const {containerStyle, contentContainerStlye} = styles;
+        const {containerStyle, contentContainerStlye, dropdownStyle, dropdownTextStyle} = styles;
         return (
             <View style={containerStyle}>
                 <ScrollView>
                     <View style={contentContainerStlye}>
                         <View>
-                            <ComboBox text="Kendaraan"/>
-                            <ComboBox text="Cabang DSF"/>
-                            <ComboBox text="Region"/>
-                            <Input>
-                                Harga
-                            </Input>
-                            <ComboBox text="Tenor"/>
-                            <ComboBox text="Tipe Pembayaran"/>
-                            <ComboBox text="Jenis Asuransi"/>
+                            <View style={{marginBottom: 5}}>
+                                <Text style={{fontSize: 10, marginBottom: 3}}>Kendaraan</Text>
+                                <ModalDropdown options={['option 1', 'option 2']}
+                                               style={dropdownStyle}
+                                               textStyle={dropdownTextStyle}
+                                />
+                            </View>
+                            <View style={{marginBottom: 5}}>
+                                <Text style={{fontSize: 10, marginBottom: 3}}>Cabang DSF</Text>
+                                <ModalDropdown options={['Jakarta', 'Bandung']}
+                                               style={dropdownStyle}
+                                               textStyle={dropdownTextStyle}
+                                               onSelect={(idx, value) => this.setState({cabang: value})}
+                                />
+                            </View>
+                            <View style={{marginBottom: 5}}>
+                                <Text style={{fontSize: 10, marginBottom: 3}}>Region</Text>
+                                <ModalDropdown options={['Cijerah', 'Sumber Sari']}
+                                               style={dropdownStyle}
+                                               textStyle={dropdownTextStyle}
+                                               onSelect={(idx, value) => this.setState({region: value})}
+                                />
+                            </View>
+                            <View style={{marginBottom: 5}}>
+                                <Text style={{fontSize: 10, marginBottom: 3}}>Harga</Text>
+                                <TextInput
+                                    style={{height: 40, width: 330, borderWidth: 1, borderRadius: 3}}
+                                />
+                            </View>
+                            <View style={{marginBottom: 5}}>
+                                <Text style={{fontSize: 10, marginBottom: 3}}>Tenor</Text>
+                                <ModalDropdown options={['option 1', 'option 2']}
+                                               style={dropdownStyle}
+                                               textStyle={dropdownTextStyle}
+                                />
+                            </View>
+                            <View style={{marginBottom: 5}}>
+                                <Text style={{fontSize: 10, marginBottom: 3}}>Tipe Pembayaran</Text>
+                                <ModalDropdown options={['option 1', 'option 2']}
+                                               style={dropdownStyle}
+                                               textStyle={dropdownTextStyle}
+                                />
+                            </View>
+                            <View style={{marginBottom: 5}}>
+                                <Text style={{fontSize: 10, marginBottom: 3}}>Jenis Asuransi</Text>
+                                <ModalDropdown options={['option 1', 'option 2']}
+                                               style={dropdownStyle}
+                                               textStyle={dropdownTextStyle}
+                                />
+                            </View>
                         </View>
-                        <View>
+                        <View style={{marginBottom: 5}}>
                             <RadioBtn text="TJH/TPL"/>
                             <RadioBtn text="Loan Protection"/>
                             <RadioBtn text="Apakah asuransi ingin dimasukkan ke pokok hutan?"/>
                         </View>
                         <View>
-                            <Input>
-                                Provisi (%)
-                            </Input>
-                            <ComboBox text="Type Customer"/>
+                            <View style={{marginBottom: 5}}>
+                                <Text style={{fontSize: 10, marginBottom: 3}}>Provisi (%)</Text>
+                                <TextInput
+                                    style={{height: 40, width: 330, borderWidth: 1, borderRadius: 3}}
+                                />
+                            </View>
+                            <View style={{marginBottom: 5}}>
+                                <Text style={{fontSize: 10, marginBottom: 3}}>Type Costumer</Text>
+                                <ModalDropdown options={['option 1', 'option 2']}
+                                               style={dropdownStyle}
+                                               textStyle={dropdownTextStyle}
+                                />
+                            </View>
                         </View>
                         <View>
                             <Text style={{fontSize: 10, marginBottom: 5}}>
@@ -129,7 +212,7 @@ class CreditSimulationScreen extends Component {
                                                 labelHorizontal={true}
                                                 onPress={onPress}
                                                 labelStyle={{color: 'black'}}
-                                                labelWrapStyle={{marginRight:40}}
+                                                labelWrapStyle={{marginRight: 40}}
                                             />
                                         </RadioButton>
                                     )
@@ -139,13 +222,14 @@ class CreditSimulationScreen extends Component {
                             <Divider style={{backgroundColor: '#EEEEEE', marginTop: 5, marginBottom: 5}}/>
                         </View>
                         {this.jenisSimulasiViewHandler()}
-                        <View style={{marginTop:32}}>
+                        <View style={{marginTop: 32}}>
                             <ButtonRNE
                                 title="HITUNG"
-                                onPress={this.redirect.bind(this, 'resultScreen')}
+                                // onPress={this.redirect.bind(this, 'resultScreen')}
+                                onPress={this.saveFormValue.bind(this)}
                             />
                         </View>
-                        <View style={{marginTop:32, marginBottom:70}}>
+                        <View style={{marginTop: 32, marginBottom: 70}}>
                             <Text
                                 style={{color: 'red', fontWeight: 'bold', alignSelf: 'center'}}
                                 onPress={() => console.log("RESET Pressed!")}
@@ -170,6 +254,20 @@ const styles = {
     },
     contentContainerStlye: {
         padding: 24
+    },
+    dropdownStyle: {
+        width: 330,
+        height: 40,
+        borderWidth: 1,
+        borderRadius: 3
+    },
+    dropdownTextStyle: {
+        width: 320,
+        marginHorizontal: 6,
+        marginVertical: 10,
+        fontSize: 18,
+        color: 'black',
+        textAlignVertical: 'center',
     }
 };
 

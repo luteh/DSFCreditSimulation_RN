@@ -14,13 +14,17 @@ class SplashScreen extends Component {
     render() {
         const {containerStyle, imageStyle, backgroundImageStyle} = styles;
         return (
-
+        <Image
+        style={backgroundImageStyle}
+        source={require('../../imgs/splashscreen.png')}
+        >
             <View style={containerStyle}>
                 <Image
                     style={imageStyle}
                     source={require('../../imgs/splashscreen_logo.png')}
                 />
             </View>
+        </Image>
         )
     }
 }
@@ -38,8 +42,8 @@ const styles = {
         resizeMode: 'stretch'
     },
     imageStyle: {
-        width: 50,
-        height: 50,
+        width: 250,
+        height: 100,
         resizeMode: 'stretch'
     }
 };

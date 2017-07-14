@@ -2,7 +2,7 @@
  * Created by Luteh on 06/07/2017.
  */
 import React, {Component} from 'react'
-import {View, Text} from 'react-native'
+import {View, Text, AsyncStorage} from 'react-native'
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import {Divider} from 'react-native-elements'
 
@@ -20,6 +20,32 @@ class RadioBtn extends Component {
         value3: 0,
         value3Index: 0,
     };
+
+    componentDidUpdate() {
+        this.saveRadioValue()
+    }
+
+    async saveRadioValue() {
+        try {
+            let radioData = {
+                tjhtpl: this.state.types3[this.state.value3Index].label,
+                loanProtection: this.state.types3[this.state.value3Index].label,
+            };
+            switch (this.props.text) {
+                case 'TJH/TPL':
+                    await AsyncStorage.mergeItem('form', JSON.stringify(radioData));
+                    return;
+                case 'Loan Protection':
+                    await AsyncStorage.mergeItem('form', JSON.stringify(radioData));
+                    return;
+                // case 'Apakah asuransi ingin dimasukkan ke pokok hutan?':
+                //     await AsyncStorage.setItem('form', JSON.stringify({asuransi: this.state.types3[this.state.value3Index].label}));
+                //     return;
+            }
+        } catch (err) {
+
+        }
+    }
 
     render() {
         return (
@@ -61,7 +87,7 @@ class RadioBtn extends Component {
                                     labelHorizontal={true}
                                     onPress={onPress}
                                     labelStyle={{color: 'black'}}
-                                    labelWrapStyle={{marginRight:40}}
+                                    labelWrapStyle={{marginRight: 40}}
                                 />
                             </RadioButton>
                         )
