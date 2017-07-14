@@ -5,6 +5,13 @@ import React, {Component} from 'react'
 import {View, Image, Dimensions} from 'react-native'
 
 class SplashScreen extends Component {
+    componentWillMount(){
+        console.ignoredYellowBox = [
+            'Unable to symbolicate',
+            'source.uri',
+            'Possible Unhandled Promise'
+        ];
+    }
     componentDidMount() {
         setTimeout(() => {
             this.props.navigation.navigate('syaratKetentuan')
