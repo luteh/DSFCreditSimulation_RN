@@ -1,21 +1,25 @@
 {
-  "name": "dsf-credit-simulation",
-  "description": "An empty new project",
+  "name": "LIA",
+  "description": "Credit Simulation",
   "slug": "dsf-credit-simulation",
   "privacy": "public",
   "sdkVersion": "17.0.0",
   "version": "1.0.0",
   "orientation": "portrait",
   "primaryColor": "#cccccc",
-  "icon": "./assets/icons/app.png",
+  "icon": "./imgs/lia-logo.png",
   "loading": {
-    "icon": "./assets/icons/loading.png",
+    "icon": "./imgs/lia-logo.png",
     "hideExponentText": false
   },
   "packagerOpts": {
     "assetExts": ["ttf", "mp4"]
   },
   "ios": {
-    "supportsTablet": true
+    "supportsTablet": true,
+    "bundleIdentifier": "com.emveep.lia"
+  },
+  "android": {
+    "package": "com.emveep.lia"
   }
 }
