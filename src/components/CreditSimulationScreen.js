@@ -65,6 +65,26 @@ class CreditSimulationScreen extends Component {
         this.props.navigation.navigate(route);
     }
 
+    async clearText() {
+        try{
+            await AsyncStorage.clear();
+            //reset TextInput
+            this.refs['textHarga'].clear(0);
+            this.refs['textProvisi'].clear(0);
+
+            //reset Dropdown Menu
+            this.refs['ddCabang'].select(-1);
+            this.refs['ddKendaraan'].select(-1);
+            this.refs['ddRegion'].select(-1);
+            this.refs['ddTenor'].select(-1);
+            this.refs['ddTipePembayaran'].select(-1);
+            this.refs['ddJenisAsuransi'].select(-1);
+            this.refs['ddTypeCostumer'].select(-1);
+        }catch (err){
+            console.log(err)
+        }
+    }
+
     jenisSimulasiViewHandler() {
         const radioLabel = this.state.types3[this.state.value3Index].label;
         switch (radioLabel) {
@@ -105,24 +125,29 @@ class CreditSimulationScreen extends Component {
                         <View style={{alignItems: 'center'}}>
                             <View style={{marginBottom: 5}}>
                                 <Text style={{fontSize: 10, marginBottom: 3}}>Kendaraan</Text>
-                                <ModalDropdown options={['option 1', 'option 2']}
-                                               style={dropdownStyle}
-                                               textStyle={dropdownTextStyle}
-                                               dropdownStyle={dropdownMenuStyle}
+                                <ModalDropdown
+                                    ref={'ddKendaraan'}
+                                    options={['option 1', 'option 2']}
+                                    style={dropdownStyle}
+                                    textStyle={dropdownTextStyle}
+                                    dropdownStyle={dropdownMenuStyle}
                                 />
                             </View>
                             <View style={{marginBottom: 5}}>
                                 <Text style={{fontSize: 10, marginBottom: 3}}>Cabang DSF</Text>
-                                <ModalDropdown options={['Jakarta', 'Bandung']}
-                                               style={dropdownStyle}
-                                               textStyle={dropdownTextStyle}
-                                               dropdownStyle={dropdownMenuStyle}
-                                               onSelect={(idx, value) => this.setState({cabang: value})}
+                                <ModalDropdown
+                                    ref={'ddCabang'}
+                                    options={['Jakarta', 'Bandung']}
+                                    style={dropdownStyle}
+                                    textStyle={dropdownTextStyle}
+                                    dropdownStyle={dropdownMenuStyle}
+                                    onSelect={(idx, value) => this.setState({cabang: value})}
                                 />
                             </View>
                             <View style={{marginBottom: 5}}>
                                 <Text style={{fontSize: 10, marginBottom: 3}}>Region</Text>
                                 <ModalDropdown
+                                    ref={'ddRegion'}
                                     options={['Jakarta', 'West Java', 'East Java', 'North Sumatera', 'South Sumatera', 'Kalimantan-Sulawesi']}
                                     style={dropdownStyle}
                                     textStyle={dropdownTextStyle}
@@ -133,33 +158,39 @@ class CreditSimulationScreen extends Component {
                             <View style={{marginBottom: 5}}>
                                 <Text style={{fontSize: 10, marginBottom: 3}}>Harga</Text>
                                 <TextInput
+                                    ref={'textHarga'}
                                     style={textInputStyle}
-                                    editable={false}
-                                    value={this.state.harga}
+                                    // value={this.state.harga}
                                 />
                             </View>
                             <View style={{marginBottom: 5}}>
                                 <Text style={{fontSize: 10, marginBottom: 3}}>Tenor</Text>
-                                <ModalDropdown options={['option 1', 'option 2']}
-                                               style={dropdownStyle}
-                                               textStyle={dropdownTextStyle}
-                                               dropdownStyle={dropdownMenuStyle}
+                                <ModalDropdown
+                                    ref={'ddTenor'}
+                                    options={['option 1', 'option 2']}
+                                    style={dropdownStyle}
+                                    textStyle={dropdownTextStyle}
+                                    dropdownStyle={dropdownMenuStyle}
                                 />
                             </View>
                             <View style={{marginBottom: 5}}>
                                 <Text style={{fontSize: 10, marginBottom: 3}}>Tipe Pembayaran</Text>
-                                <ModalDropdown options={['option 1', 'option 2']}
-                                               style={dropdownStyle}
-                                               textStyle={dropdownTextStyle}
-                                               dropdownStyle={dropdownMenuStyle}
+                                <ModalDropdown
+                                    ref={'ddTipePembayaran'}
+                                    options={['option 1', 'option 2']}
+                                    style={dropdownStyle}
+                                    textStyle={dropdownTextStyle}
+                                    dropdownStyle={dropdownMenuStyle}
                                 />
                             </View>
                             <View style={{marginBottom: 5}}>
                                 <Text style={{fontSize: 10, marginBottom: 3}}>Jenis Asuransi</Text>
-                                <ModalDropdown options={['option 1', 'option 2']}
-                                               style={dropdownStyle}
-                                               textStyle={dropdownTextStyle}
-                                               dropdownStyle={dropdownMenuStyle}
+                                <ModalDropdown
+                                    ref={'ddJenisAsuransi'}
+                                    options={['option 1', 'option 2']}
+                                    style={dropdownStyle}
+                                    textStyle={dropdownTextStyle}
+                                    dropdownStyle={dropdownMenuStyle}
                                 />
                             </View>
                         </View>
@@ -172,15 +203,18 @@ class CreditSimulationScreen extends Component {
                             <View style={{marginBottom: 5}}>
                                 <Text style={{fontSize: 10, marginBottom: 3}}>Provisi (%)</Text>
                                 <TextInput
+                                    ref={'textProvisi'}
                                     style={textInputStyle}
                                 />
                             </View>
                             <View style={{marginBottom: 5}}>
                                 <Text style={{fontSize: 10, marginBottom: 3}}>Type Costumer</Text>
-                                <ModalDropdown options={['option 1', 'option 2']}
-                                               style={dropdownStyle}
-                                               textStyle={dropdownTextStyle}
-                                               dropdownStyle={dropdownMenuStyle}
+                                <ModalDropdown
+                                    ref={'ddTypeCostumer'}
+                                    options={['option 1', 'option 2']}
+                                    style={dropdownStyle}
+                                    textStyle={dropdownTextStyle}
+                                    dropdownStyle={dropdownMenuStyle}
                                 />
                             </View>
                         </View>
@@ -242,7 +276,7 @@ class CreditSimulationScreen extends Component {
                         <View style={{marginTop: 32, marginBottom: 70}}>
                             <Text
                                 style={{color: 'red', fontWeight: 'bold', alignSelf: 'center'}}
-                                onPress={() => console.log("RESET Pressed!")}
+                                onPress={() => this.clearText()}
                             >
                                 RESET
                             </Text>
