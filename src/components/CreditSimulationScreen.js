@@ -2,7 +2,7 @@
  * Created by Luteh on 04/07/2017.
  */
 import React, {Component} from "react";
-import {AsyncStorage, ScrollView, Text, TextInput, View} from "react-native";
+import {AsyncStorage, ScrollView, Text, TextInput, View, Dimensions} from "react-native";
 import {ButtonRNE, Footer, Input, RadioBtn} from "./common";
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from "react-native-simple-radio-button";
 import {Divider} from "react-native-elements";
@@ -97,7 +97,7 @@ class CreditSimulationScreen extends Component {
     }
 
     render() {
-        const {containerStyle, contentContainerStlye, dropdownStyle, dropdownTextStyle} = styles;
+        const {containerStyle, contentContainerStlye, dropdownStyle, dropdownTextStyle, textInputStyle} = styles;
         return (
             <View style={containerStyle}>
                 <ScrollView>
@@ -130,7 +130,7 @@ class CreditSimulationScreen extends Component {
                             <View style={{marginBottom: 5}}>
                                 <Text style={{fontSize: 10, marginBottom: 3}}>Harga</Text>
                                 <TextInput
-                                    style={{height: 40, width: 330, borderWidth: 1, borderRadius: 3}}
+                                    style={textInputStyle}
                                 />
                             </View>
                             <View style={{marginBottom: 5}}>
@@ -164,7 +164,7 @@ class CreditSimulationScreen extends Component {
                             <View style={{marginBottom: 5}}>
                                 <Text style={{fontSize: 10, marginBottom: 3}}>Provisi (%)</Text>
                                 <TextInput
-                                    style={{height: 40, width: 330, borderWidth: 1, borderRadius: 3}}
+                                    style={textInputStyle}
                                 />
                             </View>
                             <View style={{marginBottom: 5}}>
@@ -248,6 +248,8 @@ class CreditSimulationScreen extends Component {
     }
 }
 
+const SCREEN_WIDTH = Dimensions.get('window').width;
+
 const styles = {
     containerStyle: {
         flex: 1,
@@ -257,18 +259,24 @@ const styles = {
         padding: 24
     },
     dropdownStyle: {
-        width: 330,
+        width: SCREEN_WIDTH * 0.9,
         height: 40,
         borderWidth: 1,
         borderRadius: 3
     },
     dropdownTextStyle: {
-        width: 320,
+        width: SCREEN_WIDTH * 0.9,
         marginHorizontal: 6,
         marginVertical: 10,
         fontSize: 18,
         color: 'black',
         textAlignVertical: 'center',
+    },
+    textInputStyle: {
+        height: 40,
+        width: SCREEN_WIDTH * 0.9,
+        borderWidth: 1,
+        borderRadius: 3
     }
 };
 
