@@ -66,7 +66,7 @@ class CreditSimulationScreen extends Component {
     }
 
     async clearText() {
-        try{
+        try {
             await AsyncStorage.clear();
             //reset TextInput
             this.refs['textHarga'].clear(0);
@@ -80,7 +80,7 @@ class CreditSimulationScreen extends Component {
             this.refs['ddTipePembayaran'].select(-1);
             this.refs['ddJenisAsuransi'].select(-1);
             this.refs['ddTypeCostumer'].select(-1);
-        }catch (err){
+        } catch (err) {
             console.log(err)
         }
     }
@@ -117,7 +117,14 @@ class CreditSimulationScreen extends Component {
     }
 
     render() {
-        const {containerStyle, contentContainerStlye, dropdownStyle, dropdownTextStyle, textInputStyle, dropdownMenuStyle} = styles;
+        const {
+            containerStyle,
+            contentContainerStlye,
+            dropdownStyle,
+            dropdownTextStyle,
+            textInputStyle,
+            dropdownMenuStyle
+        } = styles;
         return (
             <View style={containerStyle}>
                 <ScrollView>
@@ -240,6 +247,7 @@ class CreditSimulationScreen extends Component {
                                         >
                                             {/*  You can set RadioButtonLabel before RadioButtonInput */}
                                             <RadioButtonInput
+                                                ref={'rbDP'}
                                                 obj={obj}
                                                 index={i}
                                                 isSelected={this.state.value3Index === i}
