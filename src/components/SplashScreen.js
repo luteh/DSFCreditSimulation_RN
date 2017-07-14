@@ -36,6 +36,9 @@ class SplashScreen extends Component {
     }
 }
 
+
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 const styles = {
     containerStyle: {
         flex: 1,
@@ -44,8 +47,8 @@ const styles = {
     },
     backgroundImageStlye: {
         flex: 1,
-        width: null,
-        height: null,
+        width: width,
+        height: height,
         resizeMode: 'stretch'
     },
     imageStyle: {
