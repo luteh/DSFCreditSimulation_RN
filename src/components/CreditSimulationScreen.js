@@ -125,6 +125,29 @@ class CreditSimulationScreen extends Component {
             textInputStyle,
             dropdownMenuStyle
         } = styles;
+        const optCabang = ['Jakarta', 'Bandung'];
+        const optRegion = ['Jakarta', 'West Java', 'East Java', 'North Sumatera', 'South Sumatera', 'Kalimantan-Sulawesi'];
+        const optTenor = ['1 Tahun', '2 Tahun', '3 Tahun', '4 Tahun', '5 Tahun'];
+        const optTipePembayaran = ['ARR'];
+        const optJenisAsuransi = [
+            'NO',
+            'BJ',
+            'BA',
+            'SRCC',
+            'TS',
+            'BJ+BA',
+            'BJ+SRCC',
+            'BJ+TS',
+            'BA+SRCC',
+            'BA+TS',
+            'SRCC+TS',
+            'BJ+BA+SRCC',
+            'BJ+BA+TS',
+            'BJ+SRCC+TS',
+            'BA+SRCC+TS',
+            'BJ+BA+SRCC+TS'
+        ];
+        const optTypeCostumer = ['Private', 'Costumer'];
         return (
             <View style={containerStyle}>
                 <ScrollView>
@@ -144,7 +167,7 @@ class CreditSimulationScreen extends Component {
                                 <Text style={{fontSize: 10, marginBottom: 3}}>Cabang DSF</Text>
                                 <ModalDropdown
                                     ref={'ddCabang'}
-                                    options={['Jakarta', 'Bandung']}
+                                    options={optCabang}
                                     style={dropdownStyle}
                                     textStyle={dropdownTextStyle}
                                     dropdownStyle={dropdownMenuStyle}
@@ -155,7 +178,7 @@ class CreditSimulationScreen extends Component {
                                 <Text style={{fontSize: 10, marginBottom: 3}}>Region</Text>
                                 <ModalDropdown
                                     ref={'ddRegion'}
-                                    options={['Jakarta', 'West Java', 'East Java', 'North Sumatera', 'South Sumatera', 'Kalimantan-Sulawesi']}
+                                    options={optRegion}
                                     style={dropdownStyle}
                                     textStyle={dropdownTextStyle}
                                     dropdownStyle={dropdownMenuStyle}
@@ -174,7 +197,7 @@ class CreditSimulationScreen extends Component {
                                 <Text style={{fontSize: 10, marginBottom: 3}}>Tenor</Text>
                                 <ModalDropdown
                                     ref={'ddTenor'}
-                                    options={['option 1', 'option 2']}
+                                    options={optTenor}
                                     style={dropdownStyle}
                                     textStyle={dropdownTextStyle}
                                     dropdownStyle={dropdownMenuStyle}
@@ -184,7 +207,7 @@ class CreditSimulationScreen extends Component {
                                 <Text style={{fontSize: 10, marginBottom: 3}}>Tipe Pembayaran</Text>
                                 <ModalDropdown
                                     ref={'ddTipePembayaran'}
-                                    options={['option 1', 'option 2']}
+                                    options={optTipePembayaran}
                                     style={dropdownStyle}
                                     textStyle={dropdownTextStyle}
                                     dropdownStyle={dropdownMenuStyle}
@@ -194,7 +217,7 @@ class CreditSimulationScreen extends Component {
                                 <Text style={{fontSize: 10, marginBottom: 3}}>Jenis Asuransi</Text>
                                 <ModalDropdown
                                     ref={'ddJenisAsuransi'}
-                                    options={['option 1', 'option 2']}
+                                    options={optJenisAsuransi}
                                     style={dropdownStyle}
                                     textStyle={dropdownTextStyle}
                                     dropdownStyle={dropdownMenuStyle}
@@ -218,7 +241,7 @@ class CreditSimulationScreen extends Component {
                                 <Text style={{fontSize: 10, marginBottom: 3}}>Type Costumer</Text>
                                 <ModalDropdown
                                     ref={'ddTypeCostumer'}
-                                    options={['option 1', 'option 2']}
+                                    options={optTypeCostumer}
                                     style={dropdownStyle}
                                     textStyle={dropdownTextStyle}
                                     dropdownStyle={dropdownMenuStyle}
