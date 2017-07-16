@@ -2,11 +2,16 @@
  * Created by Luteh on 04/07/2017.
  */
 import React, {Component} from "react";
-import {AsyncStorage, Dimensions, ScrollView, Text, TextInput, View} from "react-native";
+import {AsyncStorage, Dimensions, ScrollView, Text, TextInput, View, TouchableOpacity} from "react-native";
 import {ButtonRNE, Footer, Input, RadioBtn} from "./common";
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from "react-native-simple-radio-button";
 import {Divider} from "react-native-elements";
 import ModalDropdown from "react-native-modal-dropdown";
+import Modal from 'react-native-modal'
+import renderIf from '../renderIf'
+
+const Honda = ['HR-V 1.5E M/T', 'HR-V 1.5E A/T', 'HR-V 1.8L Prestige'];
+const Toyota = ['Agya 1.3E M/T', 'Agya 1.3E A/T'];
 
 class CreditSimulationScreen extends Component {
     static navigationOptions = {
@@ -27,6 +32,8 @@ class CreditSimulationScreen extends Component {
             {label: 'TDP', value: 1},
             {label: 'Cicilan', value: 2},
         ],
+        comboboxGroup: false,
+        visibleSubKendaraan: '',
         value3: 0,
         value3Index: 0,
         canada: '',
@@ -116,38 +123,70 @@ class CreditSimulationScreen extends Component {
         }
     }
 
+    setKendaraan(data) {
+        this.setState({kendaraan: data, comboboxGroup: false})
+    }
+
+    renderSubKendaraan(subKendaraan) {
+        switch (subKendaraan) {
+            case 'Honda':
+                return Honda.map((data, i) => {
+                    return (
+                        <Text
+                            key={i}
+                            onPress={() => this.setKendaraan(data)}
+                        >
+                            {data}
+                        </Text>
+                    )
+                });
+            case 'Toyota':
+                return Toyota.map((data, i) => {
+                    return (
+                        <Text
+                            key={i}
+                            onPress={() => this.setKendaraan(data)}
+                        >
+                            {data}
+                        </Text>
+                    )
+                })
+        }
+
+    }
+
+    renderComboboxGroup() {
+        return (
+            <View style={modalContentStyle}>
+                <View style={{marginBottom: 5}}>
+                    <TouchableOpacity
+                        onPress={() => this.setState({visibleSubKendaraan: 'Honda'})}
+                    >
+                        <Text>Honda</Text>
+                    </TouchableOpacity>
+                </View>
+                {renderIf(this.state.visibleSubKendaraan === 'Honda')(
+                    <View>
+                        {this.renderSubKendaraan('Honda')}
+                    </View>
+                )}
+                <View>
+                    <TouchableOpacity
+                        onPress={() => this.setState({visibleSubKendaraan: 'Toyota'})}
+                    >
+                        <Text>Toyota</Text>
+                    </TouchableOpacity>
+                </View>
+                {renderIf(this.state.visibleSubKendaraan === 'Toyota')(
+                    <View>
+                        {this.renderSubKendaraan('Toyota')}
+                    </View>
+                )}
+            </View>
+        )
+    }
+
     render() {
-        const {
-            containerStyle,
-            contentContainerStlye,
-            dropdownStyle,
-            dropdownTextStyle,
-            textInputStyle,
-            dropdownMenuStyle
-        } = styles;
-        const optCabang = ['Jakarta', 'Bandung'];
-        const optRegion = ['Jakarta', 'West Java', 'East Java', 'North Sumatera', 'South Sumatera', 'Kalimantan-Sulawesi'];
-        const optTenor = ['1 Tahun', '2 Tahun', '3 Tahun', '4 Tahun', '5 Tahun'];
-        const optTipePembayaran = ['ARR'];
-        const optJenisAsuransi = [
-            'NO',
-            'BJ',
-            'BA',
-            'SRCC',
-            'TS',
-            'BJ+BA',
-            'BJ+SRCC',
-            'BJ+TS',
-            'BA+SRCC',
-            'BA+TS',
-            'SRCC+TS',
-            'BJ+BA+SRCC',
-            'BJ+BA+TS',
-            'BJ+SRCC+TS',
-            'BA+SRCC+TS',
-            'BJ+BA+SRCC+TS'
-        ];
-        const optTypeCostumer = ['Private', 'Costumer'];
         return (
             <View style={containerStyle}>
                 <ScrollView>
@@ -155,14 +194,21 @@ class CreditSimulationScreen extends Component {
                         <View style={{alignItems: 'center'}}>
                             <View style={{marginBottom: 5}}>
                                 <Text style={{fontSize: 10, marginBottom: 3}}>Kendaraan</Text>
-                                <ModalDropdown
-                                    ref={'ddKendaraan'}
-                                    options={['option 1', 'option 2']}
-                                    style={dropdownStyle}
-                                    textStyle={dropdownTextStyle}
-                                    dropdownStyle={dropdownMenuStyle}
-                                />
+                                <TouchableOpacity
+                                    style={styles.dropdownStyle}
+                                    onPress={() => this.setState({comboboxGroup: true})}
+                                >
+                                    <Text style={{textAlignVertical: 'center', marginLeft: 5, marginVertical: 5}}>
+                                        {this.state.kendaraan}
+                                    </Text>
+                                </TouchableOpacity>
                             </View>
+                            <Modal
+                                isVisible={this.state.comboboxGroup}
+                                // onModalHide={() => this.setState({comboboxGroup: false})}
+                            >
+                                {this.renderComboboxGroup()}
+                            </Modal>
                             <View style={{marginBottom: 5}}>
                                 <Text style={{fontSize: 10, marginBottom: 3}}>Cabang DSF</Text>
                                 <ModalDropdown
@@ -338,6 +384,13 @@ const styles = {
         borderWidth: 1,
         borderRadius: 3
     },
+    modalContentStyle: {
+        backgroundColor: 'white',
+        padding: 24,
+        justifyContent: 'center',
+        borderRadius: 4,
+        borderColor: 'rgba(0, 0, 0, 0.1)',
+    },
     dropdownTextStyle: {
         width: SCREEN_WIDTH * 0.9,
         marginHorizontal: 6,
@@ -359,5 +412,38 @@ const styles = {
         borderRadius: 3
     }
 };
+
+const {
+    containerStyle,
+    contentContainerStlye,
+    dropdownStyle,
+    dropdownTextStyle,
+    textInputStyle,
+    dropdownMenuStyle,
+    modalContentStyle
+} = styles;
+const optCabang = ['Jakarta', 'Bandung'];
+const optRegion = ['Jakarta', 'West Java', 'East Java', 'North Sumatera', 'South Sumatera', 'Kalimantan-Sulawesi'];
+const optTenor = ['1 Tahun', '2 Tahun', '3 Tahun', '4 Tahun', '5 Tahun'];
+const optTipePembayaran = ['ARR'];
+const optJenisAsuransi = [
+    'NO',
+    'BJ',
+    'BA',
+    'SRCC',
+    'TS',
+    'BJ+BA',
+    'BJ+SRCC',
+    'BJ+TS',
+    'BA+SRCC',
+    'BA+TS',
+    'SRCC+TS',
+    'BJ+BA+SRCC',
+    'BJ+BA+TS',
+    'BJ+SRCC+TS',
+    'BA+SRCC+TS',
+    'BJ+BA+SRCC+TS'
+];
+const optTypeCostumer = ['Private', 'Costumer'];
 
 export {CreditSimulationScreen};
