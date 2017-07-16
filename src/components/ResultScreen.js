@@ -1,10 +1,10 @@
 /**
  * Created by Luteh on 10/07/2017.
  */
-import React, {Component} from 'react'
-import {View, Text, Image, Dimensions, ScrollView, AsyncStorage} from 'react-native'
-import {ListItem} from 'native-base'
-import {ResultText, PerincianText, ButtonRNE, Footer} from './common'
+import React, {Component} from "react";
+import {AsyncStorage, Dimensions, Image, ScrollView, Text, View} from "react-native";
+import {ListItem} from "native-base";
+import {ButtonRNE, Footer, PerincianText, ResultText} from "./common";
 import {Button} from "react-native-elements";
 
 class ResultScreen extends Component {
@@ -20,19 +20,19 @@ class ResultScreen extends Component {
         },
     };
 
-    state={
-        cabang:'',
-        region:'',
-        tjhtpl:'',
-        loanProtection:'',
-        asuransi:''
+    state = {
+        cabang: '',
+        region: '',
+        tjhtpl: '',
+        loanProtection: '',
+        asuransi: ''
     };
 
-    componentWillMount(){
-        this.getFormData()
+    componentWillMount() {
+        // this.getFormData()
     }
 
-    async getFormData(){
+    async getFormData() {
         try {
             await AsyncStorage.getItem('form', (error, result) => {
                 if (result) {
@@ -47,6 +47,7 @@ class ResultScreen extends Component {
     }
 
     render() {
+        const {kendaraan, cabang, region, harga, tenor, tipePembayaran, jenisAsuransi, provisi, typeCostumer} = this.props.navigation.state.params;
         return (
             <ScrollView>
                 <View style={styles.containerStyle}>
@@ -59,30 +60,30 @@ class ResultScreen extends Component {
                             <View>
                                 <ResultText
                                     titleText="Kendaraan"
-                                    detailText="Mitsubishi"
+                                    detailText={kendaraan}
                                 />
                                 <ResultText
                                     titleText="Cabang DSF"
-                                    detailText={this.state.cabang}
+                                    detailText={cabang}
                                 />
                                 <ResultText
                                     titleText="Region"
-                                    detailText={this.state.region}
+                                    detailText={region}
                                 />
                                 <ResultText
                                     titleText="Cabang DSF"
-                                    detailText="Mitsubishi"
+                                    detailText={cabang}
                                 />
                                 <ResultText
                                     titleText="Harga"
-                                    detailText="Mitsubishi"
+                                    detailText={harga}
                                 />
                             </View>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                                 <View style={{flex: 1}}>
                                     <ResultText
                                         titleText="Tenor"
-                                        detailText="Mitsubishi"
+                                        detailText={tenor}
                                     />
                                     <ResultText
                                         titleText="TJH / TPL"
@@ -90,17 +91,17 @@ class ResultScreen extends Component {
                                     />
                                     <ResultText
                                         titleText="Jenis Asuransi"
-                                        detailText="Mitsubishi"
+                                        detailText={jenisAsuransi}
                                     />
                                     <ResultText
                                         titleText="Type Costumer"
-                                        detailText="Mitsubishi"
+                                        detailText={typeCostumer}
                                     />
                                 </View>
                                 <View style={{flex: 1}}>
                                     <ResultText
                                         titleText="Tipe Pembayaran"
-                                        detailText="Mitsubishi"
+                                        detailText={tipePembayaran}
                                     />
                                     <ResultText
                                         titleText="Loan Protection"
@@ -108,7 +109,7 @@ class ResultScreen extends Component {
                                     />
                                     <ResultText
                                         titleText="Provisi"
-                                        detailText="Mitsubishi"
+                                        detailText={provisi}
                                     />
                                     <ResultText
                                         titleText="Jenis Simulasi"
@@ -124,7 +125,7 @@ class ResultScreen extends Component {
                                 paddingTop: 3,
                                 paddingBottom: 3
                             }}>
-                                <Text style={{fontWeight: 'bold', alignSelf:'center'}}>
+                                <Text style={{fontWeight: 'bold', alignSelf: 'center'}}>
                                     Perincian Kredit (Rp)
                                 </Text>
                             </View>

@@ -2,13 +2,13 @@
  * Created by Luteh on 04/07/2017.
  */
 import React, {Component} from "react";
-import {AsyncStorage, Dimensions, ScrollView, Text, TextInput, View, TouchableOpacity} from "react-native";
+import {AsyncStorage, Dimensions, ScrollView, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {ButtonRNE, Footer, Input, RadioBtn} from "./common";
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from "react-native-simple-radio-button";
 import {Divider} from "react-native-elements";
 import ModalDropdown from "react-native-modal-dropdown";
-import Modal from 'react-native-modal'
-import renderIf from '../renderIf'
+import Modal from "react-native-modal";
+import renderIf from "../renderIf";
 
 const Honda = ['HR-V 1.5E M/T', 'HR-V 1.5E A/T', 'HR-V 1.8L Prestige'];
 const Toyota = ['Agya 1.3E M/T', 'Agya 1.3E A/T'];
@@ -53,10 +53,6 @@ class CreditSimulationScreen extends Component {
         dpRupiah: '',
     };
 
-    componentDidUpdate() {
-        console.log('Dropdown cabang : ' + this.state.cabang)
-    }
-
     async saveFormValue() {
         try {
             const {cabang, region} = this.state;
@@ -69,27 +65,33 @@ class CreditSimulationScreen extends Component {
     }
 
     redirect(route) {
-        this.props.navigation.navigate(route);
+        const {kendaraan, cabang, region, harga, tenor, tipePembayaran, jenisAsuransi, provisi, typeCostumer} = this.state;
+        this.props.navigation.navigate(route, {
+            kendaraan,
+            cabang,
+            region,
+            harga,
+            tenor,
+            tipePembayaran,
+            jenisAsuransi,
+            provisi,
+            typeCostumer
+        });
     }
 
     async clearText() {
-        try {
-            await AsyncStorage.clear();
-            //reset TextInput
-            this.refs['textHarga'].clear(0);
-            this.refs['textProvisi'].clear(0);
+        this.setState({kendaraan: ''});
+        //reset TextInput
+        this.refs['textHarga'].clear(0);
+        this.refs['textProvisi'].clear(0);
 
-            //reset Dropdown Menu
-            this.refs['ddCabang'].select(-1);
-            this.refs['ddKendaraan'].select(-1);
-            this.refs['ddRegion'].select(-1);
-            this.refs['ddTenor'].select(-1);
-            this.refs['ddTipePembayaran'].select(-1);
-            this.refs['ddJenisAsuransi'].select(-1);
-            this.refs['ddTypeCostumer'].select(-1);
-        } catch (err) {
-            console.log(err)
-        }
+        //reset Dropdown Menu
+        this.refs['ddCabang'].select(-1);
+        this.refs['ddRegion'].select(-1);
+        this.refs['ddTenor'].select(-1);
+        this.refs['ddTipePembayaran'].select(-1);
+        this.refs['ddJenisAsuransi'].select(-1);
+        this.refs['ddTypeCostumer'].select(-1);
     }
 
     jenisSimulasiViewHandler() {
@@ -236,6 +238,7 @@ class CreditSimulationScreen extends Component {
                                 <TextInput
                                     ref={'textHarga'}
                                     style={textInputStyle}
+                                    onChangeText={(val) => this.setState({harga: val})}
                                     // value={this.state.harga}
                                 />
                             </View>
@@ -247,6 +250,7 @@ class CreditSimulationScreen extends Component {
                                     style={dropdownStyle}
                                     textStyle={dropdownTextStyle}
                                     dropdownStyle={dropdownMenuStyle}
+                                    onSelect={(idx, value) => this.setState({tenor: value})}
                                 />
                             </View>
                             <View style={{marginBottom: 5}}>
@@ -257,6 +261,7 @@ class CreditSimulationScreen extends Component {
                                     style={dropdownStyle}
                                     textStyle={dropdownTextStyle}
                                     dropdownStyle={dropdownMenuStyle}
+                                    onSelect={(idx, value) => this.setState({tipePembayaran: value})}
                                 />
                             </View>
                             <View style={{marginBottom: 5}}>
@@ -267,6 +272,7 @@ class CreditSimulationScreen extends Component {
                                     style={dropdownStyle}
                                     textStyle={dropdownTextStyle}
                                     dropdownStyle={dropdownMenuStyle}
+                                    onSelect={(idx, value) => this.setState({jenisAsuransi: value})}
                                 />
                             </View>
                         </View>
@@ -281,6 +287,7 @@ class CreditSimulationScreen extends Component {
                                 <TextInput
                                     ref={'textProvisi'}
                                     style={textInputStyle}
+                                    onChangeText={(val) => this.setState({provisi: val})}
                                 />
                             </View>
                             <View style={{marginBottom: 5}}>
@@ -291,6 +298,7 @@ class CreditSimulationScreen extends Component {
                                     style={dropdownStyle}
                                     textStyle={dropdownTextStyle}
                                     dropdownStyle={dropdownMenuStyle}
+                                    onSelect={(idx, value) => this.setState({typeCostumer: value})}
                                 />
                             </View>
                         </View>
@@ -346,8 +354,8 @@ class CreditSimulationScreen extends Component {
                         <View style={{marginTop: 32}}>
                             <ButtonRNE
                                 title="HITUNG"
-                                // onPress={this.redirect.bind(this, 'resultScreen')}
-                                onPress={this.saveFormValue.bind(this)}
+                                onPress={this.redirect.bind(this, 'resultScreen')}
+                                // onPress={this.saveFormValue.bind(this)}
                             />
                         </View>
                         <View style={{marginTop: 32, marginBottom: 70}}>
