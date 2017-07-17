@@ -36,10 +36,11 @@ class ResultScreen extends Component {
         return (
             <ScrollView>
                 <View style={styles.containerStyle}>
-                    <Image
+                    {/*Hide image header specifically for phase 1*/}
+                    {/*<Image
                         style={styles.imageStyle}
                         source={require('../../imgs/result_img.png')}
-                    />
+                    />*/}
                     <View style={{padding: 24}}>
                         <View>
                             <View>
