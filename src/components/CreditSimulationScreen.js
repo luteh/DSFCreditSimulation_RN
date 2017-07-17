@@ -2,7 +2,7 @@
  * Created by Luteh on 04/07/2017.
  */
 import React, {Component} from "react";
-import {AsyncStorage, Dimensions, ScrollView, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {Dimensions, ScrollView, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {ButtonRNE, Footer, Input, RadioBtn} from "./common";
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from "react-native-simple-radio-button";
 import {Divider} from "react-native-elements";
@@ -52,17 +52,6 @@ class CreditSimulationScreen extends Component {
         jenisSimulasi: '',
         dpRupiah: '',
     };
-
-    async saveFormValue() {
-        try {
-            const {cabang, region} = this.state;
-            let temporaryData = {cabang, region};
-            await AsyncStorage.setItem('form', JSON.stringify(temporaryData));
-            this.redirect('resultScreen')
-        } catch (err) {
-            console.log(err)
-        }
-    }
 
     redirect(route) {
         const {kendaraan, cabang, region, harga, tenor, tipePembayaran, jenisAsuransi, provisi, typeCostumer} = this.state;

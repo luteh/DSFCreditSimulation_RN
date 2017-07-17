@@ -2,7 +2,7 @@
  * Created by Luteh on 10/07/2017.
  */
 import React, {Component} from "react";
-import {AsyncStorage, Dimensions, Image, ScrollView, Text, View} from "react-native";
+import {Dimensions, Image, ScrollView, Text, View} from "react-native";
 import {ListItem} from "native-base";
 import {ButtonRNE, Footer, PerincianText, ResultText} from "./common";
 import {Button} from "react-native-elements";
@@ -29,21 +29,6 @@ class ResultScreen extends Component {
     };
 
     componentWillMount() {
-        // this.getFormData()
-    }
-
-    async getFormData() {
-        try {
-            await AsyncStorage.getItem('form', (error, result) => {
-                if (result) {
-                    let resultParsed = JSON.parse(result);
-                    const {cabang, region, tjhtpl, loanProtection, asuransi} = resultParsed;
-                    this.setState({cabang, region, tjhtpl, loanProtection, asuransi});
-                }
-            });
-        } catch (err) {
-            console.log(err);
-        }
     }
 
     render() {
