@@ -32,7 +32,7 @@ class ResultScreen extends Component {
     }
 
     render() {
-        const {kendaraan, cabang, region, harga, tenor, tipePembayaran, jenisAsuransi, provisi, typeCostumer} = this.props.navigation.state.params;
+        const {kendaraan, cabang, region, harga, tenor, tipePembayaran, jenisAsuransi, provisi, typeCostumer, jenisSimulasi} = this.props.navigation.state.params;
         return (
             <ScrollView>
                 <View style={styles.containerStyle}>
@@ -98,7 +98,7 @@ class ResultScreen extends Component {
                                     />
                                     <ResultText
                                         titleText="Jenis Simulasi"
-                                        detailText="Mitsubishi"
+                                        detailText={jenisSimulasi}
                                     />
                                 </View>
                             </View>
