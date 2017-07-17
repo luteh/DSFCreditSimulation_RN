@@ -21,32 +21,6 @@ class RadioBtn extends Component {
         value3Index: 0,
     };
 
-    componentDidUpdate() {
-        this.saveRadioValue()
-    }
-
-    async saveRadioValue() {
-        try {
-            let radioData = {
-                tjhtpl: this.state.types3[this.state.value3Index].label,
-                loanProtection: this.state.types3[this.state.value3Index].label,
-            };
-            switch (this.props.text) {
-                case 'TJH/TPL':
-                    await AsyncStorage.mergeItem('form', JSON.stringify(radioData));
-                    return;
-                case 'Loan Protection':
-                    await AsyncStorage.mergeItem('form', JSON.stringify(radioData));
-                    return;
-                // case 'Apakah asuransi ingin dimasukkan ke pokok hutan?':
-                //     await AsyncStorage.setItem('form', JSON.stringify({asuransi: this.state.types3[this.state.value3Index].label}));
-                //     return;
-            }
-        } catch (err) {
-
-        }
-    }
-
     render() {
         return (
             <View>
