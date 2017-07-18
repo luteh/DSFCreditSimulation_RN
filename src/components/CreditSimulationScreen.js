@@ -110,6 +110,7 @@ class CreditSimulationScreen extends Component {
                         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
                             <TextInput
                                 style={{height: 40, width: 100, borderWidth: 1, borderRadius: 3, marginRight: 5}}
+                                underlineColorAndroid='transparent'
                                 placeholder='%'
                                 keyboardType='numeric'
                             />
@@ -199,17 +200,90 @@ class CreditSimulationScreen extends Component {
         )
     }
 
+    componentWillMount() {
+        if (optCabang.length === 1) {
+            this.setState({cabang: optCabang[0].label});
+        }
+
+        if (optRegion.length === 1) {
+            this.setState({region: optRegion[0].label});
+        }
+
+        if (optTenor.length === 1) {
+            this.setState({tenor: optTenor[0].label});
+        }
+
+        if (optTipePembayaran.length === 1) {
+            this.setState({tipePembayaran: optTipePembayaran[0].label});
+        }
+
+        if (optJenisAsuransi.length === 1) {
+            this.setState({jenisAsuransi: optJenisAsuransi[0].label});
+        }
+
+        if (optTypeCostumer.length === 1) {
+            this.setState({typeCostumer: optTypeCostumer[0].label});
+        }
+    }
+
+    setStatePicker(type, label) {
+        switch (type) {
+            case 'cabang':
+                this.setState({cabang:label});
+                break;
+            case 'region':
+                this.setState({region:label});
+                break;
+            case 'tenor':
+                this.setState({tenor:label});
+                break;
+            case 'payment':
+                this.setState({tipePembayaran:label});
+                break;
+            case 'insurance':
+                this.setState({jenisAsuransi:label});
+                break;
+            case 'customer':
+                this.setState({typeCostumer:label});
+                break;
+
+        }
+    }
+
+    renderCustomModalPicker(optData, valueOpt, type) {
+        if (optData.length === 1) {
+            return (
+                <View>
+                    <TextInput
+                        underlineColorAndroid='transparent'
+                        style={textInputStyle}
+                        editable={false}
+                        value={valueOpt}/>
+                </View>
+            )
+        } else {
+            return (
+                <View>
+                    <CustomModalPicker
+                        optData={optData}
+                        children={valueOpt}
+                        onChangeOption={ (option) => { this.setStatePicker(type, option.label)} }/>
+                </View>
+            )
+        }
+    }
+
     render() {
         const {kendaraan, cabang, region, harga, tenor, tipePembayaran, jenisAsuransi, provisi, typeCostumer, errorMessage} = this.state;
         return (
             <View style={containerStyle}>
                 <ScrollView>
-                    <View style={contentContainerStlye}>
+                    <View style={contentContainerStyle}>
                         <View style={{alignItems: 'center'}}>
                             <View style={{marginBottom: 5}}>
-                                <Text style={{fontSize: 10, marginBottom: 3}}>Kendaraan</Text>
+                                <Text style={textTitleStyle}>Kendaraan</Text>
                                 <TouchableOpacity
-                                    style={styles.dropdownStyle}
+                                    style={textInputStyle}
                                     onPress={() => this.setState({comboboxGroup: true})}
                                 >
                                     <Text style={{textAlignVertical: 'center', marginLeft: 5, marginVertical: 5}}>
@@ -227,16 +301,9 @@ class CreditSimulationScreen extends Component {
                             >
                                 {this.renderComboboxGroup()}
                             </Modal>
-                            <View style={{marginBottom: 5}}>
-                                <Text style={{fontSize: 10, marginBottom: 3}}>Cabang DSF</Text>
-                                <ModalDropdown
-                                    ref={'ddCabang'}
-                                    options={optCabang}
-                                    style={dropdownStyle}
-                                    textStyle={dropdownTextStyle}
-                                    dropdownStyle={dropdownMenuStyle}
-                                    onSelect={(idx, value) => this.setState({cabang: value})}
-                                />
+                            <View style={{marginBottom: 5, flex:1, justifyContent:'space-around'}}>
+                                <Text style={textTitleStyle}>Cabang DSF</Text>
+                                {this.renderCustomModalPicker(optCabang, this.state.cabang, 'cabang')}
                             </View>
                             {renderIf(cabang === '' && errorMessage)(
                                 <View>
@@ -244,15 +311,8 @@ class CreditSimulationScreen extends Component {
                                 </View>
                             )}
                             <View style={{marginBottom: 5}}>
-                                <Text style={{fontSize: 10, marginBottom: 3}}>Region</Text>
-                                <ModalDropdown
-                                    ref={'ddRegion'}
-                                    options={optRegion}
-                                    style={dropdownStyle}
-                                    textStyle={dropdownTextStyle}
-                                    dropdownStyle={dropdownMenuStyle}
-                                    onSelect={(idx, value) => this.setState({region: value})}
-                                />
+                                <Text style={textTitleStyle}>Region</Text>
+                                {this.renderCustomModalPicker(optRegion, this.state.region, 'region')}
                             </View>
                             {renderIf(region === '' && errorMessage)(
                                 <View>
@@ -260,7 +320,7 @@ class CreditSimulationScreen extends Component {
                                 </View>
                             )}
                             <View style={{marginBottom: 5}}>
-                                <Text style={{fontSize: 10, marginBottom: 3}}>Harga</Text>
+                                <Text style={textTitleStyle}>Harga</Text>
                                 <TextInput
                                     ref={'textHarga'}
                                     style={textInputStyle}
@@ -275,15 +335,8 @@ class CreditSimulationScreen extends Component {
                                 </View>
                             )}
                             <View style={{marginBottom: 5}}>
-                                <Text style={{fontSize: 10, marginBottom: 3}}>Tenor</Text>
-                                <ModalDropdown
-                                    ref={'ddTenor'}
-                                    options={optTenor}
-                                    style={dropdownStyle}
-                                    textStyle={dropdownTextStyle}
-                                    dropdownStyle={dropdownMenuStyle}
-                                    onSelect={(idx, value) => this.setState({tenor: value})}
-                                />
+                                <Text style={textTitleStyle}>Tenor</Text>
+                                {this.renderCustomModalPicker(optTenor, this.state.tenor, 'tenor')}
                             </View>
                             {renderIf(tenor === '' && errorMessage)(
                                 <View>
@@ -291,15 +344,8 @@ class CreditSimulationScreen extends Component {
                                 </View>
                             )}
                             <View style={{marginBottom: 5}}>
-                                <Text style={{fontSize: 10, marginBottom: 3}}>Tipe Pembayaran</Text>
-                                <ModalDropdown
-                                    ref={'ddTipePembayaran'}
-                                    options={optTipePembayaran}
-                                    style={dropdownStyle}
-                                    textStyle={dropdownTextStyle}
-                                    dropdownStyle={dropdownMenuStyle}
-                                    onSelect={(idx, value) => this.setState({tipePembayaran: value})}
-                                />
+                                <Text style={textTitleStyle}>Tipe Pembayaran</Text>
+                                {this.renderCustomModalPicker(optTipePembayaran, this.state.tipePembayaran, 'payment')}
                             </View>
                             {renderIf(tipePembayaran === '' && errorMessage)(
                                 <View>
@@ -307,15 +353,8 @@ class CreditSimulationScreen extends Component {
                                 </View>
                             )}
                             <View style={{marginBottom: 5}}>
-                                <Text style={{fontSize: 10, marginBottom: 3}}>Jenis Asuransi</Text>
-                                <ModalDropdown
-                                    ref={'ddJenisAsuransi'}
-                                    options={optJenisAsuransi}
-                                    style={dropdownStyle}
-                                    textStyle={dropdownTextStyle}
-                                    dropdownStyle={dropdownMenuStyle}
-                                    onSelect={(idx, value) => this.setState({jenisAsuransi: value})}
-                                />
+                                <Text style={textTitleStyle}>Jenis Asuransi</Text>
+                                {this.renderCustomModalPicker(optJenisAsuransi, this.state.jenisAsuransi, 'insurance')}
                             </View>
                             {renderIf(jenisAsuransi === '' && errorMessage)(
                                 <View>
@@ -330,7 +369,7 @@ class CreditSimulationScreen extends Component {
                         </View>
                         <View style={{alignItems: 'center'}}>
                             <View style={{marginBottom: 5}}>
-                                <Text style={{fontSize: 10, marginBottom: 3}}>Provisi (%)</Text>
+                                <Text style={textTitleStyle}>Provinsi (%)</Text>
                                 <TextInput
                                     ref={'textProvisi'}
                                     style={textInputStyle}
@@ -344,15 +383,8 @@ class CreditSimulationScreen extends Component {
                                 </View>
                             )}
                             <View style={{marginBottom: 5}}>
-                                <Text style={{fontSize: 10, marginBottom: 3}}>Type Costumer</Text>
-                                <ModalDropdown
-                                    ref={'ddTypeCostumer'}
-                                    options={optTypeCostumer}
-                                    style={dropdownStyle}
-                                    textStyle={dropdownTextStyle}
-                                    dropdownStyle={dropdownMenuStyle}
-                                    onSelect={(idx, value) => this.setState({typeCostumer: value})}
-                                />
+                                <Text style={textTitleStyle}>Type Costumer</Text>
+                                {this.renderCustomModalPicker(optTypeCostumer, this.state.typeCostumer, 'customer')}
                             </View>
                             {renderIf(typeCostumer === '' && errorMessage)(
                                 <View>
@@ -372,8 +404,7 @@ class CreditSimulationScreen extends Component {
                                     let onPress = (value, index) => {
                                         this.setState({
                                             value3: value,
-                                            value3Index: index,
-
+                                            value3Index: index
                                         })
                                     };
                                     return (
@@ -442,14 +473,8 @@ const styles = {
         flex: 1,
         backgroundColor: 'white',
     },
-    contentContainerStlye: {
+    contentContainerStyle: {
         padding: 24,
-    },
-    dropdownStyle: {
-        width: SCREEN_WIDTH * 0.9,
-        height: 40,
-        borderWidth: 1,
-        borderRadius: 3
     },
     modalContentStyle: {
         backgroundColor: 'white',
@@ -458,59 +483,67 @@ const styles = {
         borderRadius: 4,
         borderColor: 'rgba(0, 0, 0, 0.1)',
     },
-    dropdownTextStyle: {
-        width: SCREEN_WIDTH * 0.9,
-        marginHorizontal: 6,
-        marginVertical: 10,
-        fontSize: 18,
-        color: 'black',
-        textAlignVertical: 'center',
-    },
-    dropdownMenuStyle: {
-        width: SCREEN_WIDTH * 0.9,
-        height: 200,
-        borderWidth: 1,
-        borderRadius: 3,
-    },
     textInputStyle: {
         height: 40,
         width: SCREEN_WIDTH * 0.9,
         borderWidth: 1,
-        borderRadius: 3
+        borderRadius: 3,
+        paddingLeft: 8,
+        paddingRight: 8
+    },
+    textTitleStyle: {
+        fontSize: 10,
+        marginBottom: 3
     }
 };
 
 const {
     containerStyle,
-    contentContainerStlye,
-    dropdownStyle,
-    dropdownTextStyle,
+    contentContainerStyle,
     textInputStyle,
-    dropdownMenuStyle,
-    modalContentStyle
+    modalContentStyle,
+    textTitleStyle
 } = styles;
-const optCabang = ['Jakarta', 'Bandung'];
-const optRegion = ['Jakarta', 'West Java', 'East Java', 'North Sumatera', 'South Sumatera', 'Kalimantan-Sulawesi'];
-const optTenor = ['1 Tahun', '2 Tahun', '3 Tahun', '4 Tahun', '5 Tahun'];
-const optTipePembayaran = ['ARR'];
-const optJenisAsuransi = [
-    'NO',
-    'BJ',
-    'BA',
-    'SRCC',
-    'TS',
-    'BJ+BA',
-    'BJ+SRCC',
-    'BJ+TS',
-    'BA+SRCC',
-    'BA+TS',
-    'SRCC+TS',
-    'BJ+BA+SRCC',
-    'BJ+BA+TS',
-    'BJ+SRCC+TS',
-    'BA+SRCC+TS',
-    'BJ+BA+SRCC+TS'
+const optCabang = [
+    {key: 0, label: 'Jakarta'}
 ];
-const optTypeCostumer = ['Private', 'Costumer'];
+const optRegion = [
+    {key: 0, label: 'Jakarta'},
+    {key: 1, label: 'West Java'},
+    {key: 2, label: 'East Java'},
+    {key: 3, label: 'North Sumatera'},
+    {key: 4, label: 'South Sumatera'},
+    {key: 5, label: 'Kalimantan-Sulawesi'}
+];
+const optTenor = [
+    {key: 0, label: '1 Tahun'},
+    {key: 1, label: '2 Tahun'},
+    {key: 2, label: '3 Tahun'},
+    {key: 3, label: '4 Tahun'},
+    {key: 4, label: '5 Tahun'}
+];
+const optTipePembayaran = [{key: 0, label: 'ARR'}];
+const optJenisAsuransi = [
+    {key: 0, label: 'NO'},
+    {key: 1, label: 'BJ'},
+    {key: 2, label: 'BA'},
+    {key: 3, label: 'SRCC'},
+    {key: 4, label: 'TS'},
+    {key: 5, label: 'BJ+BA'},
+    {key: 6, label: 'BJ+SRCC'},
+    {key: 7, label: 'BJ+TS'},
+    {key: 8, label: 'BA+SRCC'},
+    {key: 9, label: 'BA+TS'},
+    {key: 10, label: 'SRCC+TS'},
+    {key: 11, label: 'BJ+BA+SRCC'},
+    {key: 12, label: 'BJ+BA+TS'},
+    {key: 13, label: 'BJ+SRCC+TS'},
+    {key: 14, label: 'BA+SRCC+TS'},
+    {key: 15, label: 'BJ+BA+SRCC+TS'}
+];
+const optTypeCostumer = [
+    {key: 0, label: 'Private'},
+    {key: 1, label: 'Costumer'}
+];
 
 export {CreditSimulationScreen};
