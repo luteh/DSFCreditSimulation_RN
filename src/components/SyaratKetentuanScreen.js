@@ -17,7 +17,7 @@ class SyaratKetentuanScreen extends Component {
     };
 
     render() {
-        const {imageStyle, contentContainerStlye, textKembaliStyle, textContentStyle} = styles;
+        const {imageStyle, contentContainerStyle, textKembaliStyle, textContentStyle} = styles;
         return (
             <ScrollView>
                 <View style={{flex: 1}}>
@@ -25,7 +25,7 @@ class SyaratKetentuanScreen extends Component {
                         style={imageStyle}
                         source={require('../../imgs/result_img.png')}
                     />
-                    <View style={contentContainerStlye}>
+                    <View style={contentContainerStyle}>
                         <View style={{alignItems: 'center'}}>
                             <View style={{marginBottom: 5}}>
                                 <Text style={textContentStyle}>
@@ -102,7 +102,7 @@ class SyaratKetentuanScreen extends Component {
 
 const width = Dimensions.get('window').width;
 const styles = {
-    contentContainerStlye: {
+    contentContainerStyle: {
         padding: 24
     },
     imageStyle: {
