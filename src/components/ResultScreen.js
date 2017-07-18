@@ -2,7 +2,7 @@
  * Created by Luteh on 10/07/2017.
  */
 import React, {Component} from "react";
-import {Dimensions, Image, ScrollView, Text, View} from "react-native";
+import {Dimensions, ScrollView, Text, View} from "react-native";
 import {ListItem} from "native-base";
 import {ButtonRNE, Footer, PerincianText, ResultText} from "./common";
 import {Button} from "react-native-elements";
@@ -31,6 +31,28 @@ class ResultScreen extends Component {
     componentWillMount() {
     }
 
+    renderResultView(title, detail) {
+        return (
+            <ResultText
+                titleText={title}
+                detailText={detail}
+            />
+        )
+    }
+
+    renderRowDirectionView(title1, detail1, title2, detail2) {
+        return (
+            <View style={{flexDirection: 'row'}}>
+                <View style={{flex: 1}}>
+                    {this.renderResultView(title1, detail1)}
+                </View>
+                <View style={{flex: 1}}>
+                    {this.renderResultView(title2, detail2)}
+                </View>
+            </View>
+        )
+    }
+
     render() {
         const {kendaraan, cabang, region, harga, tenor, tipePembayaran, jenisAsuransi, provisi, typeCostumer, jenisSimulasi} = this.props.navigation.state.params;
         return (
@@ -38,71 +60,27 @@ class ResultScreen extends Component {
                 <View style={styles.containerStyle}>
                     {/*Hide image header specifically for phase 1*/}
                     {/*<Image
-                        style={styles.imageStyle}
-                        source={require('../../imgs/result_img.png')}
-                    />*/}
+                     style={styles.imageStyle}
+                     source={require('../../imgs/result_img.png')}
+                     />*/}
                     <View style={{padding: 24}}>
                         <View>
-                            <View>
-                                <ResultText
-                                    titleText="Kendaraan"
-                                    detailText={kendaraan}
-                                />
-                                <ResultText
-                                    titleText="Cabang DSF"
-                                    detailText={cabang}
-                                />
-                                <ResultText
-                                    titleText="Region"
-                                    detailText={region}
-                                />
-                                <ResultText
-                                    titleText="Cabang DSF"
-                                    detailText={cabang}
-                                />
-                                <ResultText
-                                    titleText="Harga"
-                                    detailText={harga}
-                                />
-                            </View>
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <View style={{flex: 1}}>
-                                    <ResultText
-                                        titleText="Tenor"
-                                        detailText={tenor}
-                                    />
-                                    <ResultText
-                                        titleText="TJH / TPL"
-                                        detailText={this.state.tjhtpl}
-                                    />
-                                    <ResultText
-                                        titleText="Jenis Asuransi"
-                                        detailText={jenisAsuransi}
-                                    />
-                                    <ResultText
-                                        titleText="Type Costumer"
-                                        detailText={typeCostumer}
-                                    />
-                                </View>
-                                <View style={{flex: 1}}>
-                                    <ResultText
-                                        titleText="Tipe Pembayaran"
-                                        detailText={tipePembayaran}
-                                    />
-                                    <ResultText
-                                        titleText="Loan Protection"
-                                        detailText={this.state.loanProtection}
-                                    />
-                                    <ResultText
-                                        titleText="Provisi"
-                                        detailText={provisi}
-                                    />
-                                    <ResultText
-                                        titleText="Jenis Simulasi"
-                                        detailText={jenisSimulasi}
-                                    />
-                                </View>
-                            </View>
+                            {this.renderResultView('Kendaraan', kendaraan)}
+                            {this.renderResultView('Cabang DSF', cabang)}
+                            {this.renderResultView('Region', region)}
+                            {this.renderResultView('Cabang DSF', cabang)}
+                            {this.renderResultView('Harga', harga)}
+
+                            {this.renderRowDirectionView('Tenor', tenor, 'Tipe Pembayaran', tipePembayaran)}
+                            {this.renderRowDirectionView('Jenis Asuransi', jenisAsuransi, 'Provisi', provisi)}
+
+                            {this.renderResultView('Asuransi Perluasan', 'Tidak')}
+
+                            {this.renderRowDirectionView('TJH / TPL', 'Ya', 'Loan Protection', 'Ya')}
+
+                            {this.renderResultView('Apakah asuransi ingin dimasukkan ke pokok hutang?', 'Ya')}
+
+                            {this.renderRowDirectionView('Type Costumer', typeCostumer, 'Jenis Simulasi', jenisSimulasi)}
                         </View>
                         <View style={{marginTop: 32}}>
                             <View style={{
