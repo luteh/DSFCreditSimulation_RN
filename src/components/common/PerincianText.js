@@ -4,14 +4,14 @@
 import React from 'react'
 import {View, Text} from 'react-native'
 
-const PerincianText = ({titleList, biayaList}) => {
+const PerincianText = ({titleText, biayaText}) => {
     return (
         <View style={styles.containerStyle}>
             <Text style={{marginLeft: 5}}>
-                {titleList}
+                {titleText}
             </Text>
             <Text style={{marginRight: 5}}>
-                {biayaList}
+                {biayaText}
             </Text>
         </View>
     )

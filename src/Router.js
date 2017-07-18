@@ -111,7 +111,7 @@ export const Root = StackNavigator({
         },
     },
     {
-        mode: 'modal',
+        mode: 'card',
         initialRouteName: 'splashScreen'
     });
 

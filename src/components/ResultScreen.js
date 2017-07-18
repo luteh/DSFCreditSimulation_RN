@@ -7,6 +7,17 @@ import {ListItem} from "native-base";
 import {ButtonRNE, Footer, PerincianText, ResultText} from "./common";
 import {Button} from "react-native-elements";
 
+const biaya = '50.000.000';
+let perincian = [
+    {title: 'Uang Muka', biaya},
+    {title: 'Angsuran Pertama', biaya},
+    {title: 'Asuransi', biaya},
+    {title: 'Provisi', biaya},
+    {title: 'Admin Fee', biaya},
+    {title: 'Total DP', biaya},
+    {title: 'Sisa Angsuran (x11)', biaya},
+];
+
 class ResultScreen extends Component {
     static navigationOptions = {
         headerStyle: {
@@ -53,11 +64,24 @@ class ResultScreen extends Component {
         )
     }
 
+    renderPerincianList() {
+        return perincian.map((data, i) => {
+            return (
+                <PerincianText
+                    key={i}
+                    titleText={data.title}
+                    biayaText={data.biaya}
+                />
+            )
+        })
+    }
+
     render() {
         const {kendaraan, cabang, region, harga, tenor, tipePembayaran, jenisAsuransi, provisi, typeCostumer, jenisSimulasi} = this.props.navigation.state.params;
+        const {containerStyle, perincianKreditStyle, perincianKreditTextStyle, disclaimerBtnStyle, simulasiLainTextStyle} = styles;
         return (
             <ScrollView>
-                <View style={styles.containerStyle}>
+                <View style={containerStyle}>
                     <View style={{padding: 24}}>
                         <View>
                             {this.renderResultView('Kendaraan', kendaraan)}
@@ -77,69 +101,44 @@ class ResultScreen extends Component {
 
                             {this.renderRowDirectionView('Type Costumer', typeCostumer, 'Jenis Simulasi', jenisSimulasi)}
                         </View>
+
                         <View style={{marginTop: 32}}>
-                            <View style={{
-                                alignSelf: 'stretch',
-                                backgroundColor: '#BDBDBD',
-                                paddingTop: 3,
-                                paddingBottom: 3
-                            }}>
-                                <Text style={{fontWeight: 'bold', alignSelf: 'center'}}>
+                            <View style={perincianKreditStyle}>
+                                <Text style={perincianKreditTextStyle}>
                                     Perincian Kredit (Rp)
                                 </Text>
                             </View>
                             <View style={{marginBottom: 2}}>
-                                <PerincianText
-                                    titleList="Uang Muka"
-                                    biayaList="50.000.000"
-                                />
-                                <PerincianText
-                                    titleList="Angsuran Pertama"
-                                    biayaList="50.000.000"
-                                />
-                                <PerincianText
-                                    titleList="Asuransi"
-                                    biayaList="50.000.000"
-                                />
-                                <PerincianText
-                                    titleList="Provisi"
-                                    biayaList="50.000.000"
-                                />
-                                <PerincianText
-                                    titleList="Admin Fee"
-                                    biayaList="50.000.000"
-                                />
-                                <PerincianText
-                                    titleList="Total DP"
-                                    biayaList="50.000.000"
-                                />
-                                <PerincianText
-                                    titleList="Sisa Angsuran (x11)"
-                                    biayaList="50.000.000"
-                                />
+                                {this.renderPerincianList()}
                             </View>
                         </View>
+
                         <View style={{alignItems: 'center'}}>
                             <Button
-                                buttonStyle={styles.disclaimerBtnStyle}
+                                buttonStyle={disclaimerBtnStyle}
                                 textStyle={{fontWeight: 'bold'}}
                                 title="Disclaimer"
                                 onPress={() => console.log('Disclaimer Pressed!')}
                             />
                         </View>
+
                         <View style={{marginTop: 32}}>
                             <ButtonRNE
                                 title="SIMPAN KE PDF"
                                 onPress={() => console.log('Simpan Pressed!')}
                             />
                         </View>
-                        <Text style={{color: 'red', alignSelf: 'center', marginTop: 32}}>
+
+                        <Text style={simulasiLainTextStyle}>
                             SIMULASI LAIN
                         </Text>
+
                     </View>
+
                     <View style={{marginTop: 32}}>
 
                     </View>
+
                     <View style={{marginBottom: 32}}>
                         <Footer/>
                     </View>
@@ -155,6 +154,15 @@ const styles = {
     containerStyle: {
         backgroundColor: 'white'
     },
+    perincianKreditStyle: {
+        backgroundColor: '#BDBDBD',
+        paddingTop: 3,
+        paddingBottom: 3
+    },
+    perincianKreditTextStyle: {
+        fontWeight: 'bold',
+        alignSelf: 'center'
+    },
     imageStyle: {
         width: width,
         height: width * 0.6,
@@ -163,6 +171,11 @@ const styles = {
     disclaimerBtnStyle: {
         width: width * 0.85,
         backgroundColor: '#B71C1C'
+    },
+    simulasiLainTextStyle: {
+        color: 'red',
+        alignSelf: 'center',
+        marginTop: 32
     }
 };
 
