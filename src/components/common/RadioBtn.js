@@ -17,8 +17,8 @@ class RadioBtn extends Component {
             {label: 'Ya', value: 0},
             {label: 'Tidak', value: 1},
         ],
-        value3: 0,
-        value3Index: 0,
+        value3: -1,
+        value3Index: -1,
     };
 
     render() {

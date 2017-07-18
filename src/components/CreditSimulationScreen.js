@@ -13,6 +13,7 @@ import renderIf from "../renderIf";
 
 const Honda = ['HR-V 1.5E M/T', 'HR-V 1.5E A/T', 'HR-V 1.8L Prestige'];
 const Toyota = ['Agya 1.3E M/T', 'Agya 1.3E A/T'];
+let radioLabel = '';
 
 class CreditSimulationScreen extends Component {
     static navigationOptions = {
@@ -35,8 +36,8 @@ class CreditSimulationScreen extends Component {
         ],
         comboboxGroup: false,
         visibleSubKendaraan: '',
-        value3: 0,
-        value3Index: 0,
+        value3: -1,
+        value3Index: -1,
         canada: '',
         kendaraan: '',
         cabang: '',
@@ -56,7 +57,7 @@ class CreditSimulationScreen extends Component {
     };
 
     redirect(route) {
-        const {kendaraan, cabang, region, harga, tenor, tipePembayaran, jenisAsuransi, provisi, typeCostumer, jenisSimulasi} = this.state;
+        const {kendaraan, cabang, region, harga, tenor, tipePembayaran, jenisAsuransi, provisi, typeCostumer} = this.state;
         this.props.navigation.navigate(route, {
             kendaraan,
             cabang,
@@ -67,12 +68,11 @@ class CreditSimulationScreen extends Component {
             jenisAsuransi,
             provisi,
             typeCostumer,
-            jenisSimulasi
+            jenisSimulasi:radioLabel
         });
     }
 
     validateForm() {
-        this.setState({jenisSimulasi: this.state.types3[this.state.value3Index].label});
         const {kendaraan, cabang, region, harga, tenor, tipePembayaran, jenisAsuransi, provisi, typeCostumer} = this.state;
         if (kendaraan === '' || cabang === '' || region === '' || harga === '' || tenor === '' || tipePembayaran === '' || jenisAsuransi === ''
             || provisi === '' || typeCostumer === '') {
@@ -87,6 +87,7 @@ class CreditSimulationScreen extends Component {
         this.setState({errorMessage: false});
         this.setState({kendaraan: ''});
         this.setState({jenisSimulasi: ''});
+        this.setState({value3: -1, value3Index: -1});
         //reset TextInput
         this.refs['textHarga'].clear(0);
         this.refs['textProvisi'].clear(0);
@@ -101,35 +102,37 @@ class CreditSimulationScreen extends Component {
     }
 
     jenisSimulasiViewHandler() {
-        const radioLabel = this.state.types3[this.state.value3Index].label;
-        switch (radioLabel) {
-            case 'DP':
-                return (
-                    <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                        <TextInput
-                            style={{height: 40, width: 100, borderWidth: 1, borderRadius: 3, marginRight: 5}}
-                            placeholder='%'
-                            keyboardType='numeric'
-                        />
-                        <TextInput
-                            style={{height: 40, width: 225, borderWidth: 1, borderRadius: 3}}
-                            placeholder='Rupiah'
-                            keyboardType='numeric'
-                        />
-                    </View>
-                );
-            case 'TDP':
-                return (
-                    <Input>
-                        Rupiah
-                    </Input>
-                );
-            case 'Cicilan':
-                return (
-                    <Input>
-                        Rupiah
-                    </Input>
-                );
+        if (this.state.value3Index >= 0) {
+            radioLabel = this.state.types3[this.state.value3Index].label;
+            switch (radioLabel) {
+                case 'DP':
+                    return (
+                        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                            <TextInput
+                                style={{height: 40, width: 100, borderWidth: 1, borderRadius: 3, marginRight: 5}}
+                                placeholder='%'
+                                keyboardType='numeric'
+                            />
+                            <TextInput
+                                style={{height: 40, width: 225, borderWidth: 1, borderRadius: 3}}
+                                placeholder='Rupiah'
+                                keyboardType='numeric'
+                            />
+                        </View>
+                    );
+                case 'TDP':
+                    return (
+                        <Input>
+                            Rupiah
+                        </Input>
+                    );
+                case 'Cicilan':
+                    return (
+                        <Input>
+                            Rupiah
+                        </Input>
+                    );
+            }
         }
     }
 
