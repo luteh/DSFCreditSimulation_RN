@@ -77,7 +77,7 @@ class ResultScreen extends Component {
     }
 
     render() {
-        const {kendaraan, cabang, region, harga, tenor, tipePembayaran, jenisAsuransi, provisi, typeCostumer, jenisSimulasi} = this.props.navigation.state.params;
+        const {kendaraan, cabang, region, harga, tenor, tipePembayaran, jenisAsuransi, provisi, typeCostumer, jenisSimulasi, dpPersen, dpRupiah} = this.props.navigation.state.params;
         const {containerStyle, perincianKreditStyle, perincianKreditTextStyle, disclaimerBtnStyle, simulasiLainTextStyle} = styles;
         return (
             <ScrollView>

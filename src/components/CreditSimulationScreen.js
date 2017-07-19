@@ -62,7 +62,7 @@ class CreditSimulationScreen extends Component {
             kendaraan,
             cabang,
             region,
-            harga,
+            harga:`Rp. ${harga}`,
             tenor,
             tipePembayaran,
             jenisAsuransi,
@@ -109,7 +109,7 @@ class CreditSimulationScreen extends Component {
                     return (
                         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
                             <TextInput
-                                refs="textPersen"
+                                ref="textPersen"
                                 style={{
                                     height: 40,
                                     width: SCREEN_WIDTH * 0.2,
@@ -127,7 +127,7 @@ class CreditSimulationScreen extends Component {
                                 onChangeText={(val) => this.setState({dpPersen: val})}
                             />
                             <TextInput
-                                refs="textRupiah"
+                                ref="textRupiah"
                                 style={{
                                     height: 40,
                                     width: SCREEN_WIDTH * 0.7,
