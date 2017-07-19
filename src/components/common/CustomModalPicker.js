@@ -24,11 +24,13 @@ const styles = {
     textInputStyle: {
         width: SCREEN_WIDTH * 0.9,
         height: 40,
+        backgroundColor:'#EEEEEE',
+        borderColor:'#E0E0E0',
         borderWidth: 1,
         borderRadius: 3,
         paddingLeft: 8,
         paddingRight: 8
     }
-}
+};
 
 export { CustomModalPicker };

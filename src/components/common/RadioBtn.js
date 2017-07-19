@@ -24,7 +24,7 @@ class RadioBtn extends Component {
     render() {
         return (
             <View>
-                <Text style={{fontSize: 10, marginBottom: 5}}>
+                <Text style={styles.textTitleStyle}>
                     {this.props.text}
                 </Text>
                 <RadioForm
@@ -73,5 +73,13 @@ class RadioBtn extends Component {
         )
     }
 }
+
+const styles={
+    textTitleStyle: {
+        fontSize: 12,
+        marginBottom: 3,
+        color:'#9E9E9E'
+    },
+};
 
 export {RadioBtn}

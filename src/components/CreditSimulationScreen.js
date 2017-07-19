@@ -3,11 +3,10 @@
  */
 import React, {Component} from "react";
 import {Dimensions, ScrollView, Text, TextInput, TouchableOpacity, View} from "react-native";
-import {ButtonRNE, Footer, Input, RadioBtn} from "./common";
+import {ButtonRNE, Footer, Input, RadioBtn, CustomModalPicker} from "./common";
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from "react-native-simple-radio-button";
 import {Divider} from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import ModalDropdown from "react-native-modal-dropdown";
 import Modal from "react-native-modal";
 import renderIf from "../renderIf";
 
@@ -53,11 +52,12 @@ class CreditSimulationScreen extends Component {
         typeCostumer: '',
         jenisSimulasi: '',
         dpRupiah: '',
+        dpPersen: '',
         errorMessage: false
     };
 
     redirect(route) {
-        const {kendaraan, cabang, region, harga, tenor, tipePembayaran, jenisAsuransi, provisi, typeCostumer} = this.state;
+        const {kendaraan, cabang, region, harga, tenor, tipePembayaran, jenisAsuransi, provisi, typeCostumer, dpPersen, dpRupiah} = this.state;
         this.props.navigation.navigate(route, {
             kendaraan,
             cabang,
@@ -68,7 +68,9 @@ class CreditSimulationScreen extends Component {
             jenisAsuransi,
             provisi,
             typeCostumer,
-            jenisSimulasi:radioLabel
+            jenisSimulasi: radioLabel,
+            dpPersen,
+            dpRupiah
         });
     }
 
@@ -83,22 +85,20 @@ class CreditSimulationScreen extends Component {
         }
     }
 
-    clearText() {
+    resetForms() {
         this.setState({errorMessage: false});
         this.setState({kendaraan: ''});
         this.setState({jenisSimulasi: ''});
         this.setState({value3: -1, value3Index: -1});
+        this.setState({region: ''});
+        this.setState({tenor: ''});
+        this.setState({jenisAsuransi: ''});
+        this.setState({typeCostumer: ''});
         //reset TextInput
         this.refs['textHarga'].clear(0);
         this.refs['textProvisi'].clear(0);
-
-        //reset Dropdown Menu
-        this.refs['ddCabang'].select(-1);
-        this.refs['ddRegion'].select(-1);
-        this.refs['ddTenor'].select(-1);
-        this.refs['ddTipePembayaran'].select(-1);
-        this.refs['ddJenisAsuransi'].select(-1);
-        this.refs['ddTypeCostumer'].select(-1);
+        this.refs['textPersen'].clear(0);
+        this.refs['textRupiah'].clear(0)
     }
 
     jenisSimulasiViewHandler() {
@@ -109,15 +109,38 @@ class CreditSimulationScreen extends Component {
                     return (
                         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
                             <TextInput
-                                style={{height: 40, width: 100, borderWidth: 1, borderRadius: 3, marginRight: 5}}
+                                refs="textPersen"
+                                style={{
+                                    height: 40,
+                                    width: SCREEN_WIDTH * 0.2,
+                                    borderWidth: 1,
+                                    borderRadius: 3,
+                                    marginRight: 5,
+                                    backgroundColor: '#EEEEEE',
+                                    borderColor: '#E0E0E0',
+                                    paddingLeft: 8,
+                                    paddingRight: 8
+                                }}
                                 underlineColorAndroid='transparent'
                                 placeholder='%'
                                 keyboardType='numeric'
+                                onChangeText={(val) => this.setState({dpPersen: val})}
                             />
                             <TextInput
-                                style={{height: 40, width: 225, borderWidth: 1, borderRadius: 3}}
+                                refs="textRupiah"
+                                style={{
+                                    height: 40,
+                                    width: SCREEN_WIDTH * 0.7,
+                                    borderWidth: 1,
+                                    borderRadius: 3,
+                                    backgroundColor: '#EEEEEE',
+                                    borderColor: '#E0E0E0',
+                                    paddingLeft: 8,
+                                    paddingRight: 8
+                                }}
                                 placeholder='Rupiah'
                                 keyboardType='numeric'
+                                onChangeText={(val) => this.setState({dpRupiah: val})}
                             />
                         </View>
                     );
@@ -229,22 +252,22 @@ class CreditSimulationScreen extends Component {
     setStatePicker(type, label) {
         switch (type) {
             case 'cabang':
-                this.setState({cabang:label});
+                this.setState({cabang: label});
                 break;
             case 'region':
-                this.setState({region:label});
+                this.setState({region: label});
                 break;
             case 'tenor':
-                this.setState({tenor:label});
+                this.setState({tenor: label});
                 break;
             case 'payment':
-                this.setState({tipePembayaran:label});
+                this.setState({tipePembayaran: label});
                 break;
             case 'insurance':
-                this.setState({jenisAsuransi:label});
+                this.setState({jenisAsuransi: label});
                 break;
             case 'customer':
-                this.setState({typeCostumer:label});
+                this.setState({typeCostumer: label});
                 break;
 
         }
@@ -267,8 +290,23 @@ class CreditSimulationScreen extends Component {
                     <CustomModalPicker
                         optData={optData}
                         children={valueOpt}
-                        onChangeOption={ (option) => { this.setStatePicker(type, option.label)} }/>
+                        onChangeOption={(option) => {
+                            this.setStatePicker(type, option.label)
+                        }}/>
+                    {this.renderErrorForm(valueOpt, this.state.errorMessage)}
                 </View>
+            )
+        }
+    }
+
+    renderErrorForm(state, error) {
+        if (state === '' && error) {
+            return (
+                <Icon
+                    name="error-outline"
+                    color='red' size={24}
+                    style={errorIconStyle}
+                />
             )
         }
     }
@@ -282,85 +320,57 @@ class CreditSimulationScreen extends Component {
                         <View style={{alignItems: 'center'}}>
                             <View style={{marginBottom: 5}}>
                                 <Text style={textTitleStyle}>Kendaraan</Text>
-                                <TouchableOpacity
-                                    style={textInputStyle}
-                                    onPress={() => this.setState({comboboxGroup: true})}
-                                >
-                                    <Text style={{textAlignVertical: 'center', marginLeft: 5, marginVertical: 5}}>
-                                        {kendaraan}
-                                    </Text>
-                                </TouchableOpacity>
-                            </View>
-                            {renderIf(kendaraan === '' && errorMessage)(
                                 <View>
-                                    <Icon name="error-outline" color='red' size={18}/>
+                                    <TouchableOpacity
+                                        style={textInputStyle}
+                                        onPress={() => this.setState({comboboxGroup: true})}
+                                    >
+                                        <Text style={{textAlignVertical: 'center', marginLeft: 5, marginVertical: 5}}>
+                                            {kendaraan}
+                                        </Text>
+                                        {this.renderErrorForm(kendaraan, errorMessage)}
+                                    </TouchableOpacity>
+
                                 </View>
-                            )}
+                            </View>
                             <Modal
                                 isVisible={this.state.comboboxGroup}
                             >
                                 {this.renderComboboxGroup()}
                             </Modal>
-                            <View style={{marginBottom: 5, flex:1, justifyContent:'space-around'}}>
+                            <View style={{marginBottom: 5, flex: 1, justifyContent: 'space-around'}}>
                                 <Text style={textTitleStyle}>Cabang DSF</Text>
                                 {this.renderCustomModalPicker(optCabang, this.state.cabang, 'cabang')}
                             </View>
-                            {renderIf(cabang === '' && errorMessage)(
-                                <View>
-                                    <Icon name="error-outline" color='red' size={18}/>
-                                </View>
-                            )}
                             <View style={{marginBottom: 5}}>
                                 <Text style={textTitleStyle}>Region</Text>
                                 {this.renderCustomModalPicker(optRegion, this.state.region, 'region')}
                             </View>
-                            {renderIf(region === '' && errorMessage)(
-                                <View>
-                                    <Icon name="error-outline" color='red' size={18}/>
-                                </View>
-                            )}
                             <View style={{marginBottom: 5}}>
                                 <Text style={textTitleStyle}>Harga</Text>
-                                <TextInput
-                                    ref={'textHarga'}
-                                    style={textInputStyle}
-                                    onChangeText={(val) => this.setState({harga: val})}
-                                    keyboardType='numeric'
-                                    // value={this.state.harga}
-                                />
-                            </View>
-                            {renderIf(harga === '' && errorMessage)(
                                 <View>
-                                    <Icon name="error-outline" color='red' size={18}/>
+                                    <TextInput
+                                        ref={'textHarga'}
+                                        style={textInputStyle}
+                                        onChangeText={(val) => this.setState({harga: val})}
+                                        keyboardType='numeric'
+                                        // value={this.state.harga}
+                                    />
+                                    {this.renderErrorForm(harga, errorMessage)}
                                 </View>
-                            )}
+                            </View>
                             <View style={{marginBottom: 5}}>
                                 <Text style={textTitleStyle}>Tenor</Text>
                                 {this.renderCustomModalPicker(optTenor, this.state.tenor, 'tenor')}
                             </View>
-                            {renderIf(tenor === '' && errorMessage)(
-                                <View>
-                                    <Icon name="error-outline" color='red' size={18}/>
-                                </View>
-                            )}
                             <View style={{marginBottom: 5}}>
                                 <Text style={textTitleStyle}>Tipe Pembayaran</Text>
                                 {this.renderCustomModalPicker(optTipePembayaran, this.state.tipePembayaran, 'payment')}
                             </View>
-                            {renderIf(tipePembayaran === '' && errorMessage)(
-                                <View>
-                                    <Icon name="error-outline" color='red' size={18}/>
-                                </View>
-                            )}
                             <View style={{marginBottom: 5}}>
                                 <Text style={textTitleStyle}>Jenis Asuransi</Text>
                                 {this.renderCustomModalPicker(optJenisAsuransi, this.state.jenisAsuransi, 'insurance')}
                             </View>
-                            {renderIf(jenisAsuransi === '' && errorMessage)(
-                                <View>
-                                    <Icon name="error-outline" color='red' size={18}/>
-                                </View>
-                            )}
                         </View>
                         <View style={{marginBottom: 5, alignItems: 'flex-start'}}>
                             <RadioBtn text="TJH/TPL"/>
@@ -369,28 +379,21 @@ class CreditSimulationScreen extends Component {
                         </View>
                         <View style={{alignItems: 'center'}}>
                             <View style={{marginBottom: 5}}>
-                                <Text style={textTitleStyle}>Provinsi (%)</Text>
-                                <TextInput
-                                    ref={'textProvisi'}
-                                    style={textInputStyle}
-                                    onChangeText={(val) => this.setState({provisi: val})}
-                                    keyboardType='numeric'
-                                />
-                            </View>
-                            {renderIf(provisi === '' && errorMessage)(
+                                <Text style={textTitleStyle}>Provisi (%)</Text>
                                 <View>
-                                    <Icon name="error-outline" color='red' size={18}/>
+                                    <TextInput
+                                        ref={'textProvisi'}
+                                        style={textInputStyle}
+                                        onChangeText={(val) => this.setState({provisi: val})}
+                                        keyboardType='numeric'
+                                    />
+                                    {this.renderErrorForm(provisi, errorMessage)}
                                 </View>
-                            )}
+                            </View>
                             <View style={{marginBottom: 5}}>
                                 <Text style={textTitleStyle}>Type Costumer</Text>
                                 {this.renderCustomModalPicker(optTypeCostumer, this.state.typeCostumer, 'customer')}
                             </View>
-                            {renderIf(typeCostumer === '' && errorMessage)(
-                                <View>
-                                    <Icon name="error-outline" color='red' size={18}/>
-                                </View>
-                            )}
                         </View>
                         <View>
                             <Text style={{fontSize: 10, marginBottom: 5}}>
@@ -451,7 +454,7 @@ class CreditSimulationScreen extends Component {
                         <View style={{marginTop: 32, marginBottom: 70}}>
                             <Text
                                 style={{color: 'red', fontWeight: 'bold', alignSelf: 'center'}}
-                                onPress={() => this.clearText()}
+                                onPress={() => this.resetForms()}
                             >
                                 RESET
                             </Text>
@@ -486,14 +489,23 @@ const styles = {
     textInputStyle: {
         height: 40,
         width: SCREEN_WIDTH * 0.9,
+        backgroundColor: '#EEEEEE',
+        borderColor: '#E0E0E0',
         borderWidth: 1,
         borderRadius: 3,
         paddingLeft: 8,
         paddingRight: 8
     },
     textTitleStyle: {
-        fontSize: 10,
-        marginBottom: 3
+        fontSize: 12,
+        marginBottom: 3,
+        color: '#9E9E9E'
+    },
+    errorIconStyle: {
+        alignSelf: 'flex-end',
+        position: 'absolute',
+        marginTop: 8,
+        right: 5
     }
 };
 
@@ -502,7 +514,8 @@ const {
     contentContainerStyle,
     textInputStyle,
     modalContentStyle,
-    textTitleStyle
+    textTitleStyle,
+    errorIconStyle
 } = styles;
 const optCabang = [
     {key: 0, label: 'Jakarta'}
