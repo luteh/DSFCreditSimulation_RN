@@ -2,16 +2,18 @@
  * Created by Luteh on 10/07/2017.
  */
 import React, {Component} from 'react'
-import {View, Image, Dimensions} from 'react-native'
+import {View, Image} from 'react-native'
 
 class SplashScreen extends Component {
-    componentWillMount(){
+
+    componentWillMount() {
         console.ignoredYellowBox = [
             'Unable to symbolicate',
             'source.uri',
             'Possible Unhandled Promise'
         ];
     }
+
     componentDidMount() {
         setTimeout(() => {
             this.props.navigation.navigate('syaratKetentuan')
@@ -19,36 +21,34 @@ class SplashScreen extends Component {
     }
 
     render() {
-        const {containerStyle, imageStyle, backgroundImageStyle} = styles;
+        const {containerStyle, imageStyle, backgroundStlye} = styles;
         return (
-        <Image
-        style={backgroundImageStyle}
-        source={require('../../imgs/splashscreen.png')}
-        >
-            <View style={containerStyle}>
-                <Image
-                    style={imageStyle}
-                    source={require('../../imgs/splashscreen_logo.png')}
-                />
-            </View>
-        </Image>
+            <Image
+                style={backgroundStlye}
+                source={require('../../imgs/splashscreen.png')}
+            >
+                <View style={containerStyle}>
+                    <Image
+                        style={imageStyle}
+                        source={require('../../imgs/splashscreen_logo.png')}
+                    />
+                </View>
+            </Image>
         )
     }
 }
 
 
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
 const styles = {
     containerStyle: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
     },
-    backgroundImageStlye: {
+    backgroundStlye: {
         flex: 1,
-        width: width,
-        height: height,
+        width: null,
+        height: null,
         resizeMode: 'stretch'
     },
     imageStyle: {
