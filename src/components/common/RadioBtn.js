@@ -2,7 +2,7 @@
  * Created by Luteh on 06/07/2017.
  */
 import React, {Component} from 'react'
-import {View, Text, AsyncStorage} from 'react-native'
+import {View, Text, AsyncStorage, Dimensions} from 'react-native'
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import {Divider} from 'react-native-elements'
 
@@ -10,6 +10,8 @@ const radio_props = [
     {label: 'Ya', value: 0},
     {label: 'Tidak', value: 1}
 ];
+
+const SCREEN_WIDTH = Dimensions.get('window').width;
 
 class RadioBtn extends Component {
     state = {
@@ -49,7 +51,7 @@ class RadioBtn extends Component {
 
     render() {
         return (
-            <View>
+            <View style={this.props.styleView}>
                 <Text style={{fontSize: 10, marginBottom: 5}}>
                     {this.props.text}
                 </Text>

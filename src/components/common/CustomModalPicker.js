@@ -2,21 +2,26 @@ import React, { Component } from 'react';
 import { TextInput, Dimensions } from 'react-native';
 import ModalPicker from "../modalPicker/ModalPicker";
 
-const CustomModalPicker = ({ children, onChangeOption, optData }) => {
-    return(
-        <ModalPicker
-            data={optData}
-            onChange={onChangeOption}>
+class CustomModalPicker extends Component {
 
-            <TextInput
-                style={styles.textInputStyle}
-                underlineColorAndroid='transparent'
-                editable={false}
-                value={children} />
+    render() {
+        console.log('ref : ' + this.props.childrenId);
+        return(
+            <ModalPicker
+                data={this.props.optData}
+                onChange={this.props.onChangeOption}>
 
-        </ModalPicker>
-    );
-};
+                <TextInput
+                    ref={this.props.childrenId}
+                    style={styles.textInputStyle}
+                    underlineColorAndroid='transparent'
+                    editable={false}
+                    value={this.props.children} />
+
+            </ModalPicker>
+        );
+    }
+}
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 

@@ -223,8 +223,16 @@ class CreditSimulationScreen extends Component {
         }
     }
 
+    componentDidMount() {
+        // Get specific text input on Custom Modal Picker
+        // this.refs.insurance.refs.insurance.focus();
+    }
+
     setStatePicker(type, label) {
         switch (type) {
+            case 'vehicle':
+                this.setState({kendaraan:label});
+                break;
             case 'cabang':
                 this.setState({cabang:label});
                 break;
@@ -262,6 +270,8 @@ class CreditSimulationScreen extends Component {
             return (
                 <View>
                     <CustomModalPicker
+                        ref={type}
+                        childrenId={type}
                         optData={optData}
                         children={valueOpt}
                         onChangeOption={ (option) => { this.setStatePicker(type, option.label)} }/>
@@ -278,14 +288,15 @@ class CreditSimulationScreen extends Component {
                         <View style={{alignItems: 'center'}}>
                             <View style={{marginBottom: 5}}>
                                 <Text style={textTitleStyle}>Kendaraan</Text>
-                                <TouchableOpacity
-                                    style={textInputStyle}
-                                    onPress={() => this.setState({comboboxGroup: true})}
-                                >
-                                    <Text style={{textAlignVertical: 'center', marginLeft: 5, marginVertical: 5}}>
-                                        {this.state.kendaraan}
-                                    </Text>
-                                </TouchableOpacity>
+                                {this.renderCustomModalPicker(optVehicle, this.state.kendaraan, 'vehicle')}
+                                {/*<TouchableOpacity*/}
+                                    {/*style={textInputStyle}*/}
+                                    {/*onPress={() => this.setState({comboboxGroup: true})}*/}
+                                {/*>*/}
+                                    {/*<Text style={{textAlignVertical: 'center', marginLeft: 5, marginVertical: 5}}>*/}
+                                        {/*{this.state.kendaraan}*/}
+                                    {/*</Text>*/}
+                                {/*</TouchableOpacity>*/}
                             </View>
                             <Modal
                                 isVisible={this.state.comboboxGroup}
@@ -325,13 +336,14 @@ class CreditSimulationScreen extends Component {
                             </View>
                         </View>
                         <View style={{marginBottom: 5, alignItems: 'flex-start'}}>
-                            <RadioBtn text="TJH/TPL"/>
-                            <RadioBtn text="Loan Protection"/>
-                            <RadioBtn text="Apakah asuransi ingin dimasukkan ke pokok hutan?"/>
+                            <RadioBtn text="TJH/TPL" styleView={radioButtonStyle}/>
+                            <RadioBtn text="Loan Protection" styleView={radioButtonStyle}/>
+                            <RadioBtn
+                                text="Apakah asuransi ingin dimasukkan ke pokok hutan?" styleView={radioButtonStyle}/>
                         </View>
                         <View style={{alignItems: 'center'}}>
                             <View style={{marginBottom: 5}}>
-                                <Text style={textTitleStyle}>Provinsi (%)</Text>
+                                <Text style={textTitleStyle}>Provisi (%)</Text>
                                 <TextInput
                                     ref={'textProvisi'}
                                     keyboardType = 'numeric'
@@ -446,6 +458,10 @@ const styles = {
     textTitleStyle: {
         fontSize: 10,
         marginBottom: 3
+    },
+    radioButtonStyle: {
+        width: SCREEN_WIDTH * 0.9,
+        paddingRight: 16
     }
 };
 
@@ -454,8 +470,18 @@ const {
     contentContainerStyle,
     textInputStyle,
     modalContentStyle,
-    textTitleStyle
+    textTitleStyle,
+    radioButtonStyle
 } = styles;
+const optVehicle = [
+    {key: 0, section: true, label: 'Honda'},
+    {key: 1, label: 'HR-V 1.5E M/T'},
+    {key: 2, label: 'HR-V 1.5E A/T'},
+    {key: 3, label: 'HR-V 1.8L Prestige'},
+    {key: 4, section: true, label: 'Toyota'},
+    {key: 5, label: 'Agya 1.3E M/T'},
+    {key: 6, label: 'Agya 1.3E A/T'}
+];
 const optCabang = [
     {key: 0, label: 'Jakarta'}
 ];
