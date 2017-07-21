@@ -77,7 +77,8 @@ class ResultScreen extends Component {
     }
 
     render() {
-        const {kendaraan, cabang, region, harga, tenor, tipePembayaran, jenisAsuransi, provisi, typeCostumer, jenisSimulasi, dpPersen, dpRupiah} = this.props.navigation.state.params;
+        const {kendaraan, cabang, region, harga, tenor, tipePembayaran, jenisAsuransi, provisi, typeCostumer,
+            jenisSimulasi, dpPersen, dpRupiah, valueTjhtpl, valueLoan, valueAsuransi} = this.props.navigation.state.params;
         const {containerStyle, perincianKreditStyle, perincianKreditTextStyle, disclaimerBtnStyle, simulasiLainTextStyle} = styles;
         return (
             <ScrollView>
@@ -95,9 +96,9 @@ class ResultScreen extends Component {
 
                             {this.renderResultView('Asuransi Perluasan', 'Tidak')}
 
-                            {this.renderRowDirectionView('TJH / TPL', 'Ya', 'Loan Protection', 'Ya')}
+                            {this.renderRowDirectionView('TJH / TPL', valueTjhtpl, 'Loan Protection', valueLoan)}
 
-                            {this.renderResultView('Apakah asuransi ingin dimasukkan ke pokok hutang?', 'Ya')}
+                            {this.renderResultView('Apakah asuransi ingin dimasukkan ke pokok hutang?', valueAsuransi)}
 
                             {this.renderRowDirectionView('Type Costumer', typeCostumer, 'Jenis Simulasi', jenisSimulasi)}
                         </View>

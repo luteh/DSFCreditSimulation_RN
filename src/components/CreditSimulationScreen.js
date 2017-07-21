@@ -13,6 +13,8 @@ import renderIf from "../renderIf";
 const Honda = ['HR-V 1.5E M/T', 'HR-V 1.5E A/T', 'HR-V 1.8L Prestige'];
 const Toyota = ['Agya 1.3E M/T', 'Agya 1.3E A/T'];
 let radioLabel = '';
+let period, insuranceRate, flatRate, netInvestment, insIncludeAssetTjh, insIncludeLP, interest, totalDebt,
+    installmentPerMonth, insurance, provisionFee, totalDP;
 
 class CreditSimulationScreen extends Component {
     static navigationOptions = {
@@ -28,15 +30,33 @@ class CreditSimulationScreen extends Component {
     };
 
     state = {
-        types3: [
+        pembayaran: [
             {label: 'DP', value: 0},
             {label: 'TDP', value: 1},
             {label: 'Cicilan', value: 2},
         ],
-        comboboxGroup: false,
         visibleSubKendaraan: '',
-        value3: -1,
-        value3Index: -1,
+        valuePembayaran: -1,
+        valuePembayaranIndex: -1,
+        tjhtpl: [
+            {label: 'Ya', value: 0},
+            {label: 'Tidak', value: 1},
+        ],
+        valueTjhtpl: -1,
+        valueTjhtplIndex: -1,
+        loanProtection: [
+            {label: 'Ya', value: 0},
+            {label: 'Tidak', value: 1},
+        ],
+        valueLoan: -1,
+        valueLoanIndex: -1,
+        asuransi: [
+            {label: 'Ya', value: 0},
+            {label: 'Tidak', value: 1},
+        ],
+        valueAsuransi: -1,
+        valueAsuransiIndex: -1,
+        comboboxGroup: false,
         canada: '',
         kendaraan: '',
         cabang: '',
@@ -45,9 +65,6 @@ class CreditSimulationScreen extends Component {
         tenor: '',
         tipePembayaran: '',
         jenisAsuransi: '',
-        tjhtpl: '',
-        loanProtection: '',
-        asuransi: '',
         provisi: '',
         typeCostumer: '',
         jenisSimulasi: '',
@@ -56,8 +73,37 @@ class CreditSimulationScreen extends Component {
         errorMessage: false,
     };
 
+    componentWillMount() {
+        if (optCabang.length === 1) {
+            this.setState({cabang: optCabang[0].label});
+        }
+
+        if (optRegion.length === 1) {
+            this.setState({region: optRegion[0].label});
+        }
+
+        if (optTenor.length === 1) {
+            this.setState({tenor: optTenor[0].label});
+        }
+
+        if (optTipePembayaran.length === 1) {
+            this.setState({tipePembayaran: optTipePembayaran[0].label});
+        }
+
+        if (optJenisAsuransi.length === 1) {
+            this.setState({jenisAsuransi: optJenisAsuransi[0].label});
+        }
+
+        if (optTypeCostumer.length === 1) {
+            this.setState({typeCostumer: optTypeCostumer[0].label});
+        }
+    }
+
     redirect(route) {
-        const {kendaraan, cabang, region, harga, tenor, tipePembayaran, jenisAsuransi, provisi, typeCostumer, dpPersen, dpRupiah} = this.state;
+        const {
+            kendaraan, cabang, region, harga, tenor, tipePembayaran, jenisAsuransi, provisi, typeCostumer, dpPersen,
+            dpRupiah
+        } = this.state;
         this.props.navigation.navigate(route, {
             kendaraan,
             cabang,
@@ -70,7 +116,10 @@ class CreditSimulationScreen extends Component {
             typeCostumer,
             jenisSimulasi: radioLabel,
             dpPersen,
-            dpRupiah
+            dpRupiah,
+            valueTjhtpl: this.state.tjhtpl[this.state.valueTjhtplIndex].label,
+            valueLoan: this.state.loanProtection[this.state.valueLoanIndex].label,
+            valueAsuransi: this.state.asuransi[this.state.valueAsuransiIndex].label
         });
     }
 
@@ -81,19 +130,21 @@ class CreditSimulationScreen extends Component {
             this.setState({errorMessage: true})
         } else {
             this.setState({errorMessage: false});
-            this.redirect('resultScreen')
+            this.redirect('resultScreen');
+            this.calculateResult();
         }
     }
 
     resetForms() {
         if (radioLabel === 'DP') {
+            this.setState({dpPersen: '', dpRupiah: ''});
             this.refs['textPersen'].clear(0);
             this.refs['textRupiah'].clear(0)
         }
         this.setState({errorMessage: false});
         this.setState({kendaraan: ''});
         this.setState({jenisSimulasi: ''});
-        this.setState({value3: -1, value3Index: -1});
+        this.setState({valuePembayaran: -1, valuePembayaranIndex: -1});
         this.setState({region: ''});
         this.setState({tenor: ''});
         this.setState({jenisAsuransi: ''});
@@ -107,7 +158,6 @@ class CreditSimulationScreen extends Component {
         if (this.state.harga !== '') {
             let parseStateHarga = Number(this.state.harga);
             let parseValue;
-            // console.log(parseValue + ' dan ' + parseStateHarga);
             switch (dpField) {
                 case 'persen':
                     parseValue = Number(parseInt(this.state.dpPersen));
@@ -124,8 +174,8 @@ class CreditSimulationScreen extends Component {
     }
 
     jenisSimulasiViewHandler() {
-        if (this.state.value3Index >= 0) {
-            radioLabel = this.state.types3[this.state.value3Index].label;
+        if (this.state.valuePembayaranIndex >= 0) {
+            radioLabel = this.state.pembayaran[this.state.valuePembayaranIndex].label;
             switch (radioLabel) {
                 case 'DP':
                     return (
@@ -147,8 +197,8 @@ class CreditSimulationScreen extends Component {
                                 placeholder='%'
                                 value={this.state.dpPersen}
                                 keyboardType='numeric'
-                                onEndEditing={() => this.setDPTextState('persen')}
-                                onChangeText={(val) => this.setState({dpPersen: val + "%"})}
+                                onSubmitEditing={() => this.setDPTextState('persen')}
+                                onChangeText={(val) => this.setState({dpPersen: val})}
                             />
                             <TextInput
                                 ref="textRupiah"
@@ -165,7 +215,7 @@ class CreditSimulationScreen extends Component {
                                 placeholder='Rupiah'
                                 keyboardType='numeric'
                                 value={this.state.dpRupiah}
-                                onEndEditing={() => this.setDPTextState('rupiah')}
+                                onSubmitEditing={() => this.setDPTextState('rupiah')}
                                 onChangeText={(val) => this.setState({dpRupiah: val})}
                             />
                         </View>
@@ -249,31 +299,6 @@ class CreditSimulationScreen extends Component {
         )
     }
 
-    componentWillMount() {
-        if (optCabang.length === 1) {
-            this.setState({cabang: optCabang[0].label});
-        }
-
-        if (optRegion.length === 1) {
-            this.setState({region: optRegion[0].label});
-        }
-
-        if (optTenor.length === 1) {
-            this.setState({tenor: optTenor[0].label});
-        }
-
-        if (optTipePembayaran.length === 1) {
-            this.setState({tipePembayaran: optTipePembayaran[0].label});
-        }
-
-        if (optJenisAsuransi.length === 1) {
-            this.setState({jenisAsuransi: optJenisAsuransi[0].label});
-        }
-
-        if (optTypeCostumer.length === 1) {
-            this.setState({typeCostumer: optTypeCostumer[0].label});
-        }
-    }
 
     setStatePicker(type, label) {
         switch (type) {
@@ -289,7 +314,7 @@ class CreditSimulationScreen extends Component {
             case 'payment':
                 this.setState({tipePembayaran: label});
                 break;
-            case 'insurance':
+            case 'jenisasuransi':
                 this.setState({jenisAsuransi: label});
                 break;
             case 'customer':
@@ -337,6 +362,97 @@ class CreditSimulationScreen extends Component {
         }
     }
 
+    renderRadioButton(title, options) {
+        return (
+            <View>
+                <Text style={styles.textTitleStyle}>
+                    {title}
+                </Text>
+                <RadioForm
+                    formHorizontal={true}
+                    animation={true}
+                >
+                    {this.state.tjhtpl.map((obj, i) => {
+                        let onPress = (value, index) => {
+                            switch (options) {
+                                case 'tjhtpl':
+                                    this.setState({
+                                        valueTjhtpl: value,
+                                        valueTjhtplIndex: index
+                                    });
+                                    break;
+                                case 'loan':
+                                    this.setState({
+                                        valueLoan: value,
+                                        valueLoanIndex: index
+                                    });
+                                    break;
+                                case 'asuransi':
+                                    this.setState({
+                                        valueAsuransi: value,
+                                        valueAsuransiIndex: index
+                                    });
+                                    break;
+                            }
+                        };
+                        return (
+                            <RadioButton
+                                labelHorizontal={true}
+                                key={i}
+                            >
+                                {/*  You can set RadioButtonLabel before RadioButtonInput */}
+                                <RadioButtonInput
+                                    obj={obj}
+                                    index={i}
+                                    isSelected={this.isSelectedRadioBtn(options, i)}
+                                    onPress={onPress}
+                                    buttonInnerColor={'black'}
+                                    buttonOuterColor={'black'}
+                                    buttonSize={10}
+                                    buttonStyle={{}}
+                                    buttonWrapStyle={{}}
+                                />
+                                <RadioButtonLabel
+                                    obj={obj}
+                                    index={i}
+                                    labelHorizontal={true}
+                                    onPress={onPress}
+                                    labelStyle={{color: 'black'}}
+                                    labelWrapStyle={{marginRight: 40}}
+                                />
+                            </RadioButton>
+                        )
+                    })}
+                </RadioForm>
+                {/*<Text>selected: {this.state.types3[this.state.value3Index].label}</Text>*/}
+                <Divider style={{backgroundColor: '#EEEEEE', marginTop: 5, marginBottom: 5}}/>
+            </View>
+        )
+    }
+
+    isSelectedRadioBtn(options, i) {
+        switch (options) {
+            case 'tjhtpl':
+                return this.state.valueTjhtplIndex === i;
+            case 'loan':
+                return this.state.valueLoanIndex === i;
+            case 'asuransi':
+                return this.state.valueAsuransiIndex === i;
+        }
+    }
+
+    calculateResult() {
+        const {
+            kendaraan, cabang, region, harga, tenor, tipePembayaran, jenisAsuransi, provisi, typeCostumer, dpPersen,
+            dpRupiah
+        } = this.state;
+
+    }
+
+    calculateInsurance(){
+
+    }
+
     render() {
         const {kendaraan, cabang, region, harga, tenor, tipePembayaran, jenisAsuransi, provisi, typeCostumer, errorMessage} = this.state;
         return (
@@ -380,6 +496,7 @@ class CreditSimulationScreen extends Component {
                                         style={textInputStyle}
                                         onChangeText={(val) => this.setState({harga: val})}
                                         keyboardType='numeric'
+                                        underlineColorAndroid='transparent'
                                         // value={this.state.harga}
                                     />
                                     {this.renderErrorForm(harga, errorMessage)}
@@ -395,13 +512,13 @@ class CreditSimulationScreen extends Component {
                             </View>
                             <View style={{marginBottom: 5}}>
                                 <Text style={textTitleStyle}>Jenis Asuransi</Text>
-                                {this.renderCustomModalPicker(optJenisAsuransi, this.state.jenisAsuransi, 'insurance')}
+                                {this.renderCustomModalPicker(optJenisAsuransi, this.state.jenisAsuransi, 'jenisasuransi')}
                             </View>
                         </View>
                         <View style={{marginBottom: 5, alignItems: 'flex-start'}}>
-                            <RadioBtn text="TJH/TPL"/>
-                            <RadioBtn text="Loan Protection"/>
-                            <RadioBtn text="Apakah asuransi ingin dimasukkan ke pokok hutan?"/>
+                            {this.renderRadioButton('TJH / TPL', 'tjhtpl')}
+                            {this.renderRadioButton('Loan Protection', 'loan')}
+                            {this.renderRadioButton('Apakah asuransi ingin dimasukkan ke pokok hutang?', 'asuransi')}
                         </View>
                         <View style={{alignItems: 'center'}}>
                             <View style={{marginBottom: 5}}>
@@ -412,6 +529,7 @@ class CreditSimulationScreen extends Component {
                                         style={textInputStyle}
                                         onChangeText={(val) => this.setState({provisi: val})}
                                         keyboardType='numeric'
+                                        underlineColorAndroid='transparent'
                                     />
                                     {this.renderErrorForm(provisi, errorMessage)}
                                 </View>
@@ -429,11 +547,11 @@ class CreditSimulationScreen extends Component {
                                 formHorizontal={true}
                                 animation={true}
                             >
-                                {this.state.types3.map((obj, i) => {
+                                {this.state.pembayaran.map((obj, i) => {
                                     let onPress = (value, index) => {
                                         this.setState({
-                                            value3: value,
-                                            value3Index: index
+                                            valuePembayaran: value,
+                                            valuePembayaranIndex: index
                                         })
                                     };
                                     return (
@@ -446,7 +564,7 @@ class CreditSimulationScreen extends Component {
                                                 ref={'rbDP'}
                                                 obj={obj}
                                                 index={i}
-                                                isSelected={this.state.value3Index === i}
+                                                isSelected={this.state.valuePembayaranIndex === i}
                                                 onPress={onPress}
                                                 buttonInnerColor={'black'}
                                                 buttonOuterColor={'black'}
@@ -466,7 +584,7 @@ class CreditSimulationScreen extends Component {
                                     )
                                 })}
                             </RadioForm>
-                            {/*<Text>selected: {this.state.types3[this.state.value3Index].label}</Text>*/}
+                            {/*<Text>selected: {this.state.pembayaran[this.state.valuePembayaranIndex].label}</Text>*/}
                             <Divider style={{backgroundColor: '#EEEEEE', marginTop: 5, marginBottom: 5}}/>
                         </View>
                         {this.jenisSimulasiViewHandler()}
@@ -548,11 +666,11 @@ const optCabang = [
 ];
 const optRegion = [
     {key: 0, label: 'Jakarta'},
-    {key: 1, label: 'West Java'},
+    /*{key: 1, label: 'West Java'},
     {key: 2, label: 'East Java'},
     {key: 3, label: 'North Sumatera'},
     {key: 4, label: 'South Sumatera'},
-    {key: 5, label: 'Kalimantan-Sulawesi'}
+    {key: 5, label: 'Kalimantan-Sulawesi'}*/
 ];
 const optTenor = [
     {key: 0, label: '1 Tahun'},
@@ -582,7 +700,7 @@ const optJenisAsuransi = [
 ];
 const optTypeCostumer = [
     {key: 0, label: 'Private'},
-    {key: 1, label: 'Costumer'}
+    {key: 1, label: 'Company'}
 ];
 
 export {CreditSimulationScreen};
