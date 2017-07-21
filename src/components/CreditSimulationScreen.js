@@ -53,7 +53,7 @@ class CreditSimulationScreen extends Component {
         jenisSimulasi: '',
         dpRupiah: '',
         dpPersen: '',
-        errorMessage: false
+        errorMessage: false,
     };
 
     redirect(route) {
@@ -62,7 +62,7 @@ class CreditSimulationScreen extends Component {
             kendaraan,
             cabang,
             region,
-            harga:`Rp. ${harga}`,
+            harga: `Rp. ${harga}`,
             tenor,
             tipePembayaran,
             jenisAsuransi,
@@ -86,6 +86,10 @@ class CreditSimulationScreen extends Component {
     }
 
     resetForms() {
+        if (radioLabel === 'DP') {
+            this.refs['textPersen'].clear(0);
+            this.refs['textRupiah'].clear(0)
+        }
         this.setState({errorMessage: false});
         this.setState({kendaraan: ''});
         this.setState({jenisSimulasi: ''});
@@ -97,8 +101,26 @@ class CreditSimulationScreen extends Component {
         //reset TextInput
         this.refs['textHarga'].clear(0);
         this.refs['textProvisi'].clear(0);
-        this.refs['textPersen'].clear(0);
-        this.refs['textRupiah'].clear(0)
+    }
+
+    setDPTextState(dpField) {
+        if (this.state.harga !== '') {
+            let parseStateHarga = Number(this.state.harga);
+            let parseValue;
+            // console.log(parseValue + ' dan ' + parseStateHarga);
+            switch (dpField) {
+                case 'persen':
+                    parseValue = Number(parseInt(this.state.dpPersen));
+                    let rupiahValue = (parseValue / 100) * parseStateHarga;
+                    this.setState({dpRupiah: rupiahValue.toString()});
+                    break;
+                case 'rupiah':
+                    parseValue = Number(this.state.dpRupiah);
+                    let persenValue = (parseValue / parseStateHarga) * 100;
+                    this.setState({dpPersen: persenValue.toString() + '%'});
+                    break;
+            }
+        }
     }
 
     jenisSimulasiViewHandler() {
@@ -123,8 +145,10 @@ class CreditSimulationScreen extends Component {
                                 }}
                                 underlineColorAndroid='transparent'
                                 placeholder='%'
+                                value={this.state.dpPersen}
                                 keyboardType='numeric'
-                                onChangeText={(val) => this.setState({dpPersen: val})}
+                                onEndEditing={() => this.setDPTextState('persen')}
+                                onChangeText={(val) => this.setState({dpPersen: val + "%"})}
                             />
                             <TextInput
                                 ref="textRupiah"
@@ -140,6 +164,8 @@ class CreditSimulationScreen extends Component {
                                 }}
                                 placeholder='Rupiah'
                                 keyboardType='numeric'
+                                value={this.state.dpRupiah}
+                                onEndEditing={() => this.setDPTextState('rupiah')}
                                 onChangeText={(val) => this.setState({dpRupiah: val})}
                             />
                         </View>
