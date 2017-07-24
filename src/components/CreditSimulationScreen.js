@@ -121,15 +121,23 @@ class CreditSimulationScreen extends Component {
                 );
             case 'TDP':
                 return (
-                    <Input>
-                        Rupiah
-                    </Input>
+                    <View>
+                        <Text style={textTitleStyle}>Rupiah</Text>
+                        <TextInput
+                            style={creditTypeStyle}
+                            keyboardType = 'numeric'
+                        />
+                    </View>
                 );
             case 'Cicilan':
                 return (
-                    <Input>
-                        Rupiah
-                    </Input>
+                    <View>
+                        <Text style={textTitleStyle}>Rupiah</Text>
+                        <TextInput
+                            style={creditTypeStyle}
+                            keyboardType = 'numeric'
+                        />
+                    </View>
                 );
         }
     }
@@ -462,6 +470,14 @@ const styles = {
     radioButtonStyle: {
         width: SCREEN_WIDTH * 0.9,
         paddingRight: 16
+    },
+    creditTypeStyle: {
+        height: 40,
+        flex: 1,
+        borderWidth: 1,
+        borderRadius: 3,
+        paddingLeft: 8,
+        paddingRight: 8
     }
 };
 
@@ -471,7 +487,8 @@ const {
     textInputStyle,
     modalContentStyle,
     textTitleStyle,
-    radioButtonStyle
+    radioButtonStyle,
+    creditTypeStyle
 } = styles;
 const optVehicle = [
     {key: 0, section: true, label: 'Honda'},

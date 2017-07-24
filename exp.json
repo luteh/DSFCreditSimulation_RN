@@ -8,6 +8,10 @@
   "orientation": "portrait",
   "primaryColor": "#cccccc",
   "icon": "./imgs/lia-logo.png",
+  "androidStatusBar": {
+    "barStyle": "dark-content",
+    "backgroundColor": "#FFFFFF"
+  },
   "loading": {
     "icon": "./imgs/lia-logo.png",
     "hideExponentText": false

@@ -2,7 +2,7 @@
  * Created by Luteh on 10/07/2017.
  */
 import React, {Component} from 'react'
-import {View, Image, Dimensions} from 'react-native'
+import {View, Image, Dimensions, StatusBar} from 'react-native'
 
 class SplashScreen extends Component {
     componentWillMount(){
@@ -11,6 +11,8 @@ class SplashScreen extends Component {
             'source.uri',
             'Possible Unhandled Promise'
         ];
+
+        StatusBar.setHidden(true);
     }
     componentDidMount() {
         setTimeout(() => {

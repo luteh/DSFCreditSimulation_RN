@@ -5,7 +5,6 @@ import ModalPicker from "../modalPicker/ModalPicker";
 class CustomModalPicker extends Component {
 
     render() {
-        console.log('ref : ' + this.props.childrenId);
         return(
             <ModalPicker
                 data={this.props.optData}

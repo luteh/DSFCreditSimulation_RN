@@ -2,7 +2,7 @@
  * Created by Luteh on 13/07/2017.
  */
 import React, {Component} from "react";
-import {Dimensions, Image, ScrollView, Text, View} from "react-native";
+import {Dimensions, Image, ScrollView, Text, View, StatusBar} from "react-native";
 import {ButtonRNE, Footer} from "./common";
 
 class SyaratKetentuanScreen extends Component {
@@ -15,6 +15,10 @@ class SyaratKetentuanScreen extends Component {
         },
         headerLeft: null
     };
+
+    componentWillMount() {
+        StatusBar.setHidden(false);
+    }
 
     render() {
         const {imageStyle, contentContainerStyle, textKembaliStyle, textContentStyle} = styles;
